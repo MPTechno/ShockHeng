@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Extended Field in Form View of Journal Entries -->
+        <record id="account_move_form_view_inherited" model="ir.ui.view">
+            <field name="name">view.account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <field name="period_id" position="after">
+                    <field name="transaction_key" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
