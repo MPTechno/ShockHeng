@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Partner form view inherited -->
+        <record model="ir.ui.view" id="inherit_res_partner_form_view">
+            <field name="name">res.partner.form.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[@class='oe_title oe_left']/h1" position="before">
+                    <h3>
+                        <field name="customer_id" default_focus="1" placeholder="Customer ID"
+                        attrs="{'invisible':[('customer','!=',True)], 'required': [('customer', '=', True)]}"
+                        groups="base.group_no_one" />
+                    </h3>
+                </xpath>
+                <xpath expr="//form/sheet/div[@class='oe_title oe_left']/h1" position="after">
+                    <h3>
+                        <field name="related_customer_id" placeholder="Customer"
+                        attrs="{'invisible':[('customer','!=',True)]}"
+                        groups="base.group_no_one" options="{'no_create': True}"/>
+                    </h3>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Partner kanban view inherited -->
+        <record model="ir.ui.view" id="inherit_partner_kanban_view">
+            <field name="name">res.partner.kanban.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="before">
+                    <field name="customer_id" invisible = "context.get('default_customer') != 1"/>
+                </field>
+                <xpath expr="//div[@class='oe_kanban_details']/h4" position="before">
+                    <h4 class="oe_partner_heading">
+                        <a type="open">
+                            <field name="customer_id" invisible = "context.get('default_customer') != 1"/>
+                        </a>
+                    </h4>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Partner Tree view inherited -->
+        <record model="ir.ui.view" id="inherit_partner_tree_view">
+            <field name="name">res.partner.tree.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="before">
+                    <field name="customer_id" string="Customer ID" invisible = "context.get('default_customer') != 1"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Partner Search view inherited -->
+        <record model="ir.ui.view" id="inherit_partner_search_view">
+            <field name="name">res.partner.search.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                     <field name="customer_id" invisible = "context.get('default_customer') != 1"
+                       filter_domain="[('customer_id','ilike',self)]"/>
+                </field>
+                <group string="Group By" position="inside">
+                    <filter string="Customer ID" context="{'group_by':'customer_id'}"
+                        invisible = "context.get('default_customer') != 1"/>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</openerp>

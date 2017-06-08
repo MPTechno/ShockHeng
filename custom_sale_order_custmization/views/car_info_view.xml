@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="car_brand_form_view" model="ir.ui.view">
+            <field name="name">car.brand.form.view</field>
+            <field name="model">car.brand</field>
+            <field name="arch" type="xml">
+                <form string="Car Brand">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="car_brand_tree_view" model="ir.ui.view">
+            <field name="name">car.brand.tree.view</field>
+            <field name="model">car.brand</field>
+            <field name="arch" type="xml">
+                <tree string="Car Brand">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_car_brand_config" model="ir.actions.act_window">
+            <field name="name">Car Brand's</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">car.brand</field>
+            <field name="view_id" ref="car_brand_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="car_model_form_view" model="ir.ui.view">
+            <field name="name">car.model.form.view</field>
+            <field name="model">car.model</field>
+            <field name="arch" type="xml">
+                <form string="Car Model">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="car_model_tree_view" model="ir.ui.view">
+            <field name="name">car.model.tree.view</field>
+            <field name="model">car.model</field>
+            <field name="arch" type="xml">
+                <tree string="Car Model">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_car_model_config" model="ir.actions.act_window">
+            <field name="name">Car Model's</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">car.model</field>
+            <field name="view_id" ref="car_model_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</openerp>

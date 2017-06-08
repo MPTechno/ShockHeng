@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <report id="custom_picking_wave_report"
+            name="picking_wave_modifier_template.custom_picking_wave_report_template"
+            model="stock.picking"
+            string="Picking Wave"
+            report_type="qweb-pdf"
+            menu="False"/>
+
+        <record id="picking_wave_paperformat" model="report.paperformat">
+            <field name="name">Picking Wave Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">55</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+            <field name="dpi">90</field>
+        </record>
+         <record id="custom_picking_wave_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="picking_wave_paperformat"/>
+        </record>
+    </data>
+</openerp>

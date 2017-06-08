@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="string">Customer Name</attribute>
+                </field>
+                <field name="project_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="car_brand_id"/>
+                </field>
+                <field name="client_order_ref" position="after">
+                    <field name="car_model_id"/>
+                    <field name="vehicle_number"/>
+                    <field name="type" invisible="1" />
+                    <field name="b2b_invoice" invisible="1"/>
+                    <field name="b2c_invoice" invisible="1"/>
+                </field>
+                <xpath expr="//form/header/button[@name='action_button_confirm']" position="before">
+                    <button name="confirm_quotation" states="draft" string="Confirm Quotation" type="object" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="//form/header/button[@name='action_button_confirm'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="replace">
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create B2C Invoice"
+                            type="action" class="oe_highlight" groups="base.group_user"
+                            attrs="{'invisible': ['|',('b2c_invoice', '=',True),('state','not in',('manual'))]}" />
+                </xpath>
+                <xpath expr="//form/header/button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="after">
+                    <button name="%(action_view_b2b_advance_payment_inv)d" string="Create B2B Invoice"
+                            type="action" class="oe_highlight" groups="base.group_user"
+                            attrs="{'invisible': ['|',('b2b_invoice','=',True),('state','not in',('manual'))]}" />
+                </xpath>
+                <xpath expr="//form/header/button[@name='action_view_invoice']" position="attributes">
+                    <attribute name="string">View B2C Invoice</attribute>
+                    <attribute name="attrs">{'invisible': [('b2c_invoice', '=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='action_view_invoice']" position="after">
+                    <button name="action_b2b_view_invoice" string="View B2B Invoice" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('b2b_invoice', '=', False)]}" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="date_in" />
+                    <field name="date_out" />
+                </xpath>
+                <xpath expr="//form/header/button[@name='print_quotation'][2]" position="after">
+                    <button name="print_b2c_invoice" string="Print B2C Invoice" type="object" class="oe_highlight"
+                     attrs="{'invisible': [('b2c_invoice', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//form/header/button[@name='print_quotation'][2]" position="after">
+                    <button name="print_b2b_invoice" string="Print B2B Invoice" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('b2b_invoice', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_sale_stock_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="warehouse_id" position="attributes">
+                    <attribute name="required">False</attribute>
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="inherit_view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="type" string="Type" />
+                </field>
+            </field>
+        </record>
+
+        <!-- B2C Customer -->
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">B2C Customer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_customer":1}</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a customer; discussions, history of business opportunities,
+                documents, etc.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem id="base.menu_partner_form" parent="base.menu_sales" string='B2C Customer' action="base.action_partner_form" sequence="2"/>
+        
+        
+        <!-- B2B Customer -->
+        <record id="b2c_action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">Business Contacts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_business_contacts': 1,'default_customer': 0,'default_business_contacts': 1}</field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a supplier: discussions, history of purchases,
+                documents, etc.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem id="b2b_menu_partner_form" parent="base.menu_sales" string='Business contacts' action="b2c_action_partner_supplier_form" sequence="3"/>
+        
+        <!-- B2B Customer Filter -->
+        <record id="inherit_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//search/filter[@name='supplier']" position="after">
+                    <filter string="Business contacts" name="business_contacts" domain="[('supplier','=',1)]" help="Supplier Partners"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

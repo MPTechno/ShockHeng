@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="external_layout_b2c_invoice_report">
+            <t t-call="custom_sale_order_custmization.external_layout_header_b2c_invoice_report" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_b2c_invoice_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                SIN HOCK HENG CUSHION MAKER
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                                BLK 7 SIN MING IND, ESTATE #01-90, SINGAPORE 575642
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="o.user_id.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.user_id.company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                TEL : 6454 8160, 6454 8179 FAX : 6459 6486
+                                <br />
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="custom_b2c_invoice_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_sale_order_custmization.external_layout_b2c_invoice_report">
+                        <div class="page">
+                            <div class="row" style="font-size:10px;">
+                                <div class="col-xs-12" style="margin-left: 10px;">
+                                     <div class="col-xs-7">
+                                        Customer Name &#160;&#160;&#160;&#160;&#160;&#160;
+                                                      &#160;&#160;&#160;&#160;
+                                                      :&#160;&#160;
+                                                      <span t-esc="get_b2c_details(o)[0]['partner']"/>
+                                        <br/>
+                                        Addess &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                               &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                               &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                               :&#160;&#160;<br />
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;
+                                        :&#160;&#160;
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].name" /><br/>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;
+                                        :&#160;&#160;
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].street" /><br/>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;
+                                        :&#160;&#160;
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].city" />,
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].state_id.name" />
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].zip" /><br/>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;
+                                        :&#160;&#160;
+                                        <span t-esc="get_b2c_details(o)[0]['partner_id'].country_id.name" />
+                                     </div>
+                                     <div class="col-xs-5" >
+                                        Invoice No &#160;&#160;&#160;
+                                                :&#160;&#160;&#160;<span t-esc="get_b2c_details(o)[0]['number']"/><br/>
+                                        Telephone   &#160;&#160;&#160;
+                                                :&#160;&#160;<span t-esc="get_b2c_details(o)[0]['partner_id'].phone"/><br/>
+                                        Date    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                &#160;&#160;:&#160;&#160;
+                                                <span t-esc="get_b2c_details(o)[0]['date_invoice']"/><br/>
+                                        Terms   &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                &#160;&#160;:&#160;&#160;
+                                                <span t-esc="get_b2c_details(o)[0]['payment_term']"/><br/>
+                                        Car's Brand &#160;&#160;
+                                                :&#160;&#160;
+                                                <span t-esc="get_b2c_details(o)[0]['partner_id'].car_brand_no"/><br/>
+                                        Model   &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                &#160;&#160;&#160;:&#160;&#160;
+                                                <span t-esc="get_b2c_details(o)[0]['partner_id'].model_no"/>
+                                     </div>
+                                 </div>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <thead>
+                                        <tr style="border-top:1px solid black;">
+                                            <th width="15%">Product</th>
+                                            <th width="10%">Quantity</th>
+                                            <th width="30%">Description</th>
+                                            <th width="10%" class="text-right">Unit Price</th>
+                                            <th width="10%" class="text-right">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="get_b2c_details(o)[0]['invoice_line']" t-as="l">
+                                            <td width="15%"><span t-field="l.product_id.name"/></td>
+                                            <td width="10%">
+                                                <span t-field="l.quantity"/>
+                                                <span t-field="l.uos_id"  groups="product.group_uom"/>
+                                            </td>
+                                            <td width="30%"><span t-field="l.name"/></td>
+                                            <td width="10%" class="text-right">
+                                                <span t-field="l.price_unit"/>
+                                            </td>
+                                            <td width="10%" class="text-right">
+                                                <span t-field="l.price_subtotal" 
+                                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 15px;margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <tr class="border-black">
+                                        <td class="text-left">
+                                            Reg : 277102/OOJ
+                                        </td>
+                                        <td class="text-right">
+                                            <strong>Total&#160;&#160;&#160;&#160;&#160;&#160;</strong>
+                                            <strong>
+                                                <span t-esc="get_b2c_details(o)[0]['amount_total']" />
+                                                &#160;<span t-esc="get_b2c_details(o)[0]['display_currency']"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            Note : All cheque payments should be crossed and made payable to <br />
+                                                   &#160;&#160;&#160;&#160;&#160;&#160;
+                                                   &#160;&#160;
+                                                   SIN HOCK HENG CUSHION MAKER at the above address. 
+                                        </td>
+                                        <td class="text-right" style="font-size: 10px;">
+                                            <strong>
+                                                    SIN HOCK HENG CUSHION MAKER
+                                             </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 25px;margin-left: 10px;">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            Received By &#160; _____________________________________
+                                        </td>
+                                        <td class="text-right" style="font-size: 10px;">
+                                            &#160; _________________________________
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

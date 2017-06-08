@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="sale.menu_sale_quotations" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale.action_orders">
+            <field name="name">Sales Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <record id="inherit_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/h1/label[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/h1/label[2]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state','not in',('draft','sent'))]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

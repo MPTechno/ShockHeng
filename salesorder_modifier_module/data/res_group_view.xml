@@ -1,0 +1,7 @@
+<openerp>
+    <data noupdate="1">
+        <record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Account Invoice form view inherited -->
+        <record model="ir.ui.view" id="inherit_account_invoice_form_view">
+            <field name="name">account.invoice.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='product_id']" position="before">
+                    <field name="amount_check" attrs="{'readonly':[('state','=','paid')]}"/>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='product_id']" position="after">
+                    <field name="product_number" attrs="{'readonly':[('invoice_state','!=','draft')]}" string="Product Number"/>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="cost_price" attrs="{'readonly':[('invoice_state','!=','draft')]}"/>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="state" readonly="1"/>
+                    <field name="invoice_state" readonly="1" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='account_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='quantity']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='invoice_line_tax_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('invoice_state','!=','draft')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','=','paid')]}</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">False</attribute>
+                </xpath>
+                <xpath expr='//tree[@string="Invoice Lines"]' position='attributes'>
+                    <attribute name="create">false</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']" position="before">
+                    <button name="%(custom_partial_invoice_payment.wizard_create_invoice_line_action)d" string="Create Invoice Lines" type="action" 
+                        class="btn-primary" attrs="{'invisible': [('state','!=','draft')]}"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+    </data>
+</openerp>

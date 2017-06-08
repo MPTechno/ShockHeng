@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Account Invoice Search view inherited -->
+        <record model="ir.ui.view" id="inherit_account_invoice_search_view">
+            <field name="name">account.invoice.search.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <group expand="0" string="Group By">
+                    <filter name="group_by_date_invoice" string="Invoices Per Days" 
+                        context="{'group_by':'date_invoice:day'}"/>
+                </group>
+                <field name="number" position="before">
+                     <field name="date_invoice" string="Invoices Per Dates"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

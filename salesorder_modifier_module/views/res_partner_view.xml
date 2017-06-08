@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Partner form view inherited -->
+        <record model="ir.ui.view" id="inherit_res_partner_form_view">
+            <field name="name">res.partner.form.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[1]/div[2]" position="after">
+                    <field name="vehicle_no"/>
+                </xpath>
+                <field name="title" position="after">
+                    <field name="car_brand_no"/>
+                    <field name="model_no"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

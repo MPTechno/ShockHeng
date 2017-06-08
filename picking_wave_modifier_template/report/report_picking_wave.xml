@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="external_layout_picking_wave_report">
+            <t t-call="picking_wave_modifier_template.external_layout_header_picking_wave_report" />
+            <t t-raw="0" />
+            <t t-call="picking_wave_modifier_template.external_layout_footer_picking_wave" />
+        </template>
+
+        <template id="external_layout_header_picking_wave_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;text-transform: uppercase;">
+                         <strong style="font-size: 26px;">
+                                ORIGIN HERBAL HAIR TREATMENT PTE LTD
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                                23, KAKI BUKIT PLACE SINGAPORE 416201
+                         </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                    </div>
+                    <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-20px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                UEN/GST REGISTRATION NO:&#160;&#160;<span t-esc="o.company_id.gst_no"/><br />
+                                TEL. NO: <span t-esc="o.company_id.phone"/><br />
+                                WEBSITE: <span t-esc="o.company_id.website"/><br />
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="custom_picking_wave_report_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="picking_wave_modifier_template.external_layout_picking_wave_report">
+                        <div class="page">
+                            <div class="col-xs-12" style="margin-left: 10px;">
+                                <table class="table" width="100%">
+                                    <tr style="border-top:2px solid black;border-bottom:2px solid black;">
+                                        <td class="text-center">
+                                            <strong>PICKING LIST</strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="font-size:10px;">
+                                <div class="col-xs-12" style="margin-left: 10px;margin-top: 5px;">
+                                     <div class="col-xs-7">
+                                        <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">
+                                            <span><strong>Supplier Address&#160;&#160;:</strong></span>
+                                        </div>
+                                        <div t-if="o.picking_type_id.code=='internal' and o.partner_id">
+                                            <span><strong>Warehouse Address&#160;&#160;:</strong></span>
+                                        </div>
+                                        <div t-if="o.picking_type_id.code=='outgoing' and o.partner_id">
+                                            <span><strong>Customer Address&#160;&#160;:</strong></span>
+                                        </div>
+                                        <div t-if="o.partner_id" name="partner_header">
+                                            <div t-field="o.partner_id"
+                                               t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                                            <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5" >
+                                            Order (Origin)&#160;&#160;&#160;&#160;&#160;&#160;
+                                                          &#160;&#160;
+                                                          :&#160;&#160;<span t-esc="o.origin"/><br/>
+                                            State   &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                    &#160;&#160;&#160;&#160;&#160;&#160;
+                                                    :&#160;&#160;<span t-esc="o.state"/><br/>
+                                            Commitment Date &#160;&#160;:&#160;&#160;<span t-esc="o.date"/><br/>
+                                            Scheduled Date &#160;&#160;&#160;&#160;&#160;:&#160;&#160;<span t-esc="o.min_date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size:10px;">
+                                <div class="col-xs-12" style="margin-left: 10px;margin-top: 5px;">
+                                     <div class="col-xs-7">
+                                        <div t-if="o.move_lines and o.move_lines[0].partner_id and o.move_lines[0].partner_id.id != o.partner_id.id">
+                                            <span><strong>Delivery Address&#160;&#160;:</strong></span>
+                                            <div t-field="o.move_lines[0].partner_id"
+                                                t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                                        </div>
+                                        <div t-if="o.picking_type_id.code != 'internal' and (not o.move_lines or not o.move_lines[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
+                                            <span><strong>Warehouse Address&#160;&#160;:</strong></span>
+                                            <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                                                t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5 pull-right" >
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px;"/>
+                                    </div>
+                                 </div>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                <table class="table table-condensed" t-if="not o.pack_operation_ids">
+                                    <thead>
+                                        <tr style="border-top:1px solid black;">
+                                            <th><strong>Product</strong></th>
+                                            <th class="text-right"><strong>Quantity</strong></th>
+                                            <t t-if="o.picking_type_id.code != 'incoming'"><th><strong>Source</strong></th></t>
+                                            <th><strong>Barcode</strong></th>
+                                            <t t-if="o.picking_type_id.code != 'outgoing'"><th><strong>Destination</strong></th></t>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.move_lines" t-as="move">
+                                            <t t-if="(o.state != 'partially_available') or (move.reserved_availability > 0)">
+                                                <td><span t-field="move.product_id"/></td>
+                                                <td class="text-right">
+                                                    <t t-if="o.state == 'partially_available'">
+                                                        <span t-field="move.reserved_availability"/> <span t-field="move.product_id.uom_id" groups="product.group_uom"/>
+                                                    </t>
+                                                    <t t-if="o.state != 'partially_available'">
+                                                        <span t-field="move.product_uom_qty"/> <span t-field="move.product_uom" groups="product.group_uom"/>
+                                                    </t>
+                                                </td>
+                                                <t t-if="o.picking_type_id.code != 'incoming'"><td><span t-field="move.location_id"/></td></t>
+                                                <td>
+                                                    <span t-if="move.product_id and move.product_id.ean13">
+                                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', move.product_id.ean13, 600, 100)" style="width:300px;height:50px"/>
+                                                    </span>
+                                                </td>
+                                                <t t-if="o.picking_type_id.code != 'outgoing'"><td><span t-field="move.location_dest_id"/></td></t>
+                                            </t>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed" t-if="o.pack_operation_ids">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Product</strong></th>
+                                            <th class="text-right"><strong>Quantity</strong></th>
+                                            <t t-if="o.picking_type_id.code != 'incoming'"><th><strong>Source</strong></th></t>
+                                            <th><strong>Barcode</strong></th>
+                                            <t t-if="o.picking_type_id.code != 'outgoing'"><th><strong>Destination</strong></th></t>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                                            <td><span t-field="pack_operation.product_id"/>
+                                                <t t-if="not pack_operation.product_id and pack_operation.package_id"><span  t-field="pack_operation.package_id"/></t></td>
+                                            <td class="text-right"><span t-field="pack_operation.product_qty"/> <span t-field="pack_operation.product_uom_id" groups="product.group_uom"/></td>
+                                            <t t-if="o.picking_type_id.code != 'incoming'"><td><span t-field="pack_operation.location_id"/>
+                                                <span t-if="pack_operation.package_id">:</span>
+                                                <span t-field="pack_operation.package_id"/>
+                                                <span t-if="pack_operation.lot_id">:</span>
+                                                <span t-field="pack_operation.lot_id"/>
+                                                </td>
+                                            </t>
+                                            <td>
+                                                <span t-if="pack_operation.lot_id">
+                                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', pack_operation.lot_id.name, 600, 100)" style="width:300px;height:50px"/>
+                                                </span>
+                                                <span t-if="pack_operation.product_id and not pack_operation.lot_id and pack_operation.product_id.ean13">
+                                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', pack_operation.product_id.ean13, 600, 100)" style="width:300px;height:50px"/>
+                                                </span>
+                                                <span t-if="pack_operation.package_id and not pack_operation.product_id">
+                                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', pack_operation.package_id.name, 600, 100)" style="width:300px;height:50px"/>
+                                                </span>
+                                            </td>
+                                            <t t-if="o.picking_type_id.code != 'outgoing'"><td><span t-field="pack_operation.location_dest_id"/>
+                                                <span t-if="pack_operation.result_package_id">:</span>
+                                                <span t-field="pack_operation.result_package_id"/>
+                                            </td></t>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <tr class="border-black">
+                                        <td class="text-left">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 5px;margin-left: 10px;">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            &#160; _________________________________
+                                        </td>
+                                        <td class="text-right" style="font-size: 10px;">
+                                            &#160; _________________________________
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            &#160;&#160;&#160;&#160;
+                                            &#160;&#160;&#160;&#160;
+                                            &#160;&#160;&#160;&#160;
+                                            &#160;&#160;&#160;&#160;
+                                            <strong>PREPARED BY</strong>
+                                        </td>
+                                        <td style="font-size: 10px;text-align:center;padding-left: 45%;">
+                                            &#160;<strong>APPROVED BY</strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="external_layout_footer_picking_wave">
+             <div class="footer" style="font-size:12px;">
+                        <div class="text-right" style="margin-top:5px;">
+                            <ul class="list-inline">
+                                <li>Page:&#160;&#160;&#160;&#160;<span class="page"/>&#160;&#160;/&#160;&#160;<span class="topage"/></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                </div>
+        </template>
+    </data>
+</openerp>
