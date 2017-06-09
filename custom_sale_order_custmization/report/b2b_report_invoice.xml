@@ -107,7 +107,7 @@
                                 <table class="table table-condensed" width="100%">
                                     <thead>
                                         <tr style="border-top:1px solid black;">
-                                            <th width="15%">Product</th>
+                                            <th width="15%">Product/Service Rendered</th>
                                             <th width="10%">Quantity</th>
                                             <th width="30%">Description</th>
                                             <th width="10%" class="text-right">Unit Price</th>

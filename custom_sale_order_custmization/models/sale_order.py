@@ -26,6 +26,8 @@ class sale_order(models.Model):
     type = fields.Selection([('b2b','B2B'),('b2c','B2C')])
     supp_invoice_ids = fields.Many2many('account.invoice', 'sale_order_supplier_invoice_rel', 'order_id', 'supp_invoice_id', 'Invoices', readonly=True, copy=False, 
                                         help="This is the list of invoices that have been generated for this sales order. The same sales order may have been invoiced in several times (by line for example).")
+    customer_email = fields.Char('Email')
+    customer_contact_no = fields.Char('Contact No')
 
     @api.multi
     def confirm_quotation(self):
@@ -41,7 +43,14 @@ class sale_order(models.Model):
     def _prepare_invoice(self, cr, uid, order, lines, context=None):
         res = super(sale_order, self)._prepare_invoice(cr, uid, order, lines, context=None)
         if res:
-            order.update({'type': 'b2c','b2c_invoice':True})
+            order.update({
+                  'type': 'b2c',
+                  'b2c_invoice': True,
+            })
+            res.update({
+                  'customer_email': order.customer_email,
+                  'customer_contact_no': order.customer_contact_no,
+            })
         return res
 
     def action_b2b_view_invoice(self, cr, uid, ids, context=None):
@@ -104,4 +113,4 @@ class sale_order_line(models.Model):
 
     date_in = fields.Datetime('Date In', default=fields.Datetime.now)
     date_out = fields.Datetime('Date Out', default=fields.Datetime.now)
-    product_id = fields.Many2one('product.product', 'Service', domain=[('sale_ok', '=', True)], change_default=True, readonly=True, states={'draft': [('readonly', False)]}, ondelete='restrict')
+    product_id = fields.Many2one('product.product', 'Product/Service Rendered', domain=[('sale_ok', '=', True)], change_default=True, readonly=True, states={'draft': [('readonly', False)]}, ondelete='restrict')

@@ -3,7 +3,7 @@
 
 {
     'name': 'Custom Sale Order Modifier Module',
-    'version': '1.1',
+    'version': '1.4',
     'category': 'Sale',
     'summary': 'Custom Sales Order Customization',
     'description': """
@@ -21,6 +21,7 @@
     'data': [
         'wizard/b2b_invoice_advance.xml',
         'views/sale_view.xml',
+        'views/product_view.xml',
         'views/account_invoice_view.xml',
         'views/car_info_view.xml',
         'views/car_menu.xml',

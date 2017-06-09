@@ -15,6 +15,8 @@
                 </field>
                 <field name="partner_id" position="after">
                     <field name="car_brand_id"/>
+                    <field name="customer_email" widget="email"/>
+                    <field name="customer_contact_no"/>
                 </field>
                 <field name="client_order_ref" position="after">
                     <field name="car_model_id"/>

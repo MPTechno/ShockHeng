@@ -27,7 +27,9 @@ class b2c_invoice_report(report_sxw.rml_parse):
                 res['payment_term'] = l.payment_term.name
                 res['amount_total'] = l.amount_total
                 res['invoice_line'] = l.invoice_line
-                res['display_currency'] = l.currency_id.symbol 
+                res['display_currency'] = l.currency_id.symbol
+                res['customer_email'] = l.customer_email
+                res['customer_contact_no'] = l.customer_contact_no
                 result.append(res)
             return result
         children = _get_rec(order)

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Product Template Search view inherited -->
+        <record model="ir.ui.view" id="inherit_product_product_search_view">
+            <field name="name">product.product.search.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string='Group by...']" position="inside">
+                    <filter name="group_by_product_per_basis" string="Product Per Price Basis" 
+                        context="{'group_by':'list_price'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
