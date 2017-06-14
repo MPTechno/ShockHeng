@@ -2,10 +2,10 @@
 from openerp import api, models
 from openerp.report import report_sxw
 
-class b2b_invoice_report(report_sxw.rml_parse):
+class inherit_b2b_invoice_report(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(b2b_invoice_report, self).__init__(cr, uid, name, context=context)
+        super(inherit_b2b_invoice_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'get_b2b_details': self.get_b2b_details,
         })
@@ -24,7 +24,7 @@ class b2b_invoice_report(report_sxw.rml_parse):
                 res['partner_id'] = l.partner_id or ''
                 res['number'] = l.number or ''
                 res['date_invoice'] = l.date_invoice or ''
-                res['payment_term'] = l.payment_term.name or ''
+                res['payment_term'] = l.payment_terms_id.name or ''
                 res['amount_total'] = l.amount_total or 0.00
                 res['amount_untaxed'] = l.amount_untaxed or 0.00
                 res['amount_tax'] = l.amount_tax or 0.00
@@ -35,8 +35,8 @@ class b2b_invoice_report(report_sxw.rml_parse):
         children = _get_rec(order)
         return children
 
-class report_b2b_invoice(models.AbstractModel):
+class inherit_report_b2b_invoice(models.AbstractModel):
     _name = 'report.custom_sale_order_custmization.custom_b2b_invoice_template'
     _inherit = 'report.abstract_report'
     _template = 'custom_sale_order_custmization.custom_b2b_invoice_template'
-    _wrapped_report_class = b2b_invoice_report
+    _wrapped_report_class = inherit_b2b_invoice_report

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_view_sale_order_form_custom" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term" position="attributes">
+                     <attribute name="attrs">{'invisible': [('type','=','b2b')]}</attribute>
+                </field>
+                <field name="client_order_ref" position="after">
+                    <field name="payment_terms_id" attrs="{ 'invisible':[('type', '!=', 'b2b')]}"/>
+                </field>
+            </field>
+        </record>
+
+    
+        <!-- Custom Payment Terms -->
+        <record id="view_custom_payment_term_form" model="ir.ui.view">
+            <field name="name">custom.payment.term.form</field>
+            <field name="model">custom.payment.term</field>
+            <field name="arch" type="xml">
+                <form string="Payment Term">
+                    <group col="4">
+                        <field name="name"/>
+                    </group>
+                    <label for="note"/>
+                    <field name="note" placeholder="Payment term explanation for the customer..."/>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!--
+        Payment term
+        -->
+        <record id="custom_payment_term_cash" model="custom.payment.term">
+            <field name="name">CASH</field>
+            <field name="note">CASH</field>
+        </record>
+
+        <record id="custom_payment_term_cheque" model="custom.payment.term">
+            <field name="name">CHEQUE</field>
+            <field name="note">CHEQUE</field>
+        </record>
+        
+        <record id="custom_payment_term_credit_terms" model="custom.payment.term">
+            <field name="name">CREDIT TERMS</field>
+            <field name="note">CREDIT TERMS</field>
+        </record>
+        
+        <record id="custom_payment_term_giro" model="custom.payment.term">
+            <field name="name">GIRO</field>
+            <field name="note">GIRO</field>
+        </record>
+    </data>
+</openerp>

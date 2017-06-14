@@ -43,7 +43,7 @@
                             <div class="row" style="font-size:10px;">
                                 <div class="col-xs-12" style="margin-left: 10px;">
                                      <div class="col-xs-7">
-                                        Customer Name &#160;&#160;&#160;&#160;&#160;&#160;
+                                        Company Name &#160;&#160;&#160;&#160;&#160;&#160;
                                                       &#160;&#160;&#160;&#160;
                                                       :&#160;&#160;
                                                       <span t-esc="get_b2b_details(o)[0]['partner']"/>
@@ -107,23 +107,27 @@
                                 <table class="table table-condensed" width="100%">
                                     <thead>
                                         <tr style="border-top:1px solid black;">
-                                            <th width="15%">Product/Service Rendered</th>
+                                            <th width="25%">Product/Service Rendered</th>
                                             <th width="10%">Quantity</th>
                                             <th width="30%">Description</th>
-                                            <th width="10%" class="text-right">Unit Price</th>
+                                            <th width="15%" class="text-right">Unit Price</th>
+                                            <th width="10%" class="text-right">Taxes</th>
                                             <th width="10%" class="text-right">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody class="invoice_tbody">
                                         <tr t-foreach="get_b2b_details(o)[0]['invoice_line']" t-as="l">
-                                            <td width="15%"><span t-field="l.product_id.name"/></td>
+                                            <td width="25%"><span t-field="l.product_id.name"/></td>
                                             <td width="10%">
                                                 <span t-field="l.quantity"/>
                                                 <span t-field="l.uos_id"  groups="product.group_uom"/>
                                             </td>
                                             <td width="30%"><span t-field="l.name"/></td>
-                                            <td width="10%" class="text-right">
+                                            <td width="15%" class="text-right">
                                                 <span t-field="l.price_unit"/>
+                                            </td>
+                                            <td width="10%" class="text-right">
+                                                <span t-esc="', '.join(map(lambda x: x.name, l.invoice_line_tax_id))"/>
                                             </td>
                                             <td width="10%" class="text-right">
                                                 <span t-field="l.price_subtotal" 
@@ -133,34 +137,68 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-xs-12" style="margin-top: 15px;margin-left: 10px;">
-                                <table class="table table-condensed" width="100%">
-                                    <tr class="border-black">
-                                        <td class="text-left">
-                                            Reg : 277102/OOJ
-                                        </td>
-                                        <td class="text-right">
-                                            <strong>Total&#160;&#160;&#160;&#160;&#160;&#160;</strong>
-                                           <strong>
-                                                <span t-esc="get_b2b_details(o)[0]['amount_total']" />
-                                                &#160;<span t-esc="get_b2b_details(o)[0]['display_currency']"/>
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-left" style="font-size: 10px;">
-                                            Note : All cheque payments should be crossed and made payable to <br />
+                            <div class="row" >
+                                <div class="col-xs-12" style="margin-top: 15px;margin-left: 10px;">
+                                    <div class="col-xs-4 pull-left">
+                                        <table class="table table-condensed">
+                                            <tr class="border-black">
+                                                <td><strong>Reg : 277102/OOJ</strong></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-xs-4">
+                                    </div>
+                                    <div class="col-xs-4 pull-right">
+                                        <table class="table table-condensed">
+                                            <tr class="border-black" style="font-size: 12px;">
+                                                <td><strong>Total Without Taxes</strong></td>
+                                                <td class="text-right">
+                                                    <span t-esc="get_b2b_details(o)[0]['amount_untaxed']" />
+                                                    &#160;<span t-esc="get_b2b_details(o)[0]['display_currency']"/>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-size: 12px;">
+                                                <td>Taxes</td>
+                                                <td class="text-right">
+                                                    <span t-esc="get_b2b_details(o)[0]['amount_tax']" />
+                                                    &#160;<span t-esc="get_b2b_details(o)[0]['display_currency']"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="border-black" style="font-size: 12px;">
+                                                <td><strong>Total</strong></td>
+                                                <td class="text-right">
+                                                    <span t-esc="get_b2b_details(o)[0]['amount_total']" />
+                                                    &#160;<span t-esc="get_b2b_details(o)[0]['display_currency']"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12" style="margin-left: 10px;">
+                                    <div class="col-xs-6 pull-left">
+                                        <table class="table table-condensed">
+                                            <tr>
+                                                <td class="text-left" style="font-size: 9px;">
+                                                   Note : All cheque payments should be crossed and made payable to <br />
                                                    &#160;&#160;&#160;&#160;&#160;&#160;
                                                    &#160;&#160;
                                                    SIN HOCK HENG CUSHION MAKER at the above address. 
-                                        </td>
-                                        <td class="text-right" style="font-size: 10px;">
-                                            <strong>
-                                                    SIN HOCK HENG CUSHION MAKER
-                                             </strong>
-                                        </td>
-                                    </tr>
-                                </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-xs-6 pull-right">
+                                        <table class="table table-condensed">
+                                            <tr>
+                                                <td class="text-right" style="font-size: 10px;">
+                                                   <strong>SIN HOCK HENG CUSHION MAKER</strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-xs-12" style="margin-top: 25px;margin-left: 10px;">
                                 <table width="100%">

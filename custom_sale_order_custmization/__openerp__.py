@@ -3,7 +3,7 @@
 
 {
     'name': 'Custom Sale Order Modifier Module',
-    'version': '1.4',
+    'version': '1.5',
     'category': 'Sale',
     'summary': 'Custom Sales Order Customization',
     'description': """
