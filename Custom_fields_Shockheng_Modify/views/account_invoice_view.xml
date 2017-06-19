@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="account.action_invoice_tree1" model="ir.actions.act_window">
+            <field name="name">B2C Invoices</field>
+        </record>
+
+        <menuitem action="account.action_invoice_tree1" string="B2C Invoices" id="account.menu_action_invoice_tree1" parent="account.menu_finance_receivables"/>
+
+        <record id="account.action_invoice_tree3" model="ir.actions.act_window">
+            <field name="name">B2C Refunds</field>
+        </record>
+
+        <menuitem action="account.action_invoice_tree3" string="B2C Refunds" id="account.menu_action_invoice_tree3" parent="account.menu_finance_receivables"/>
+
+        <record id="account.action_invoice_tree2" model="ir.actions.act_window">
+            <field name="name">B2B Invoices</field>
+        </record>
+
+        <menuitem action="account.action_invoice_tree2"  string="B2B Invoices" id="account.menu_action_invoice_tree2" parent="account.menu_finance_payables"/>
+
+        <record id="account.action_invoice_tree4" model="ir.actions.act_window">
+            <field name="name">B2B Refunds</field>
+        </record>
+
+        <menuitem action="account.action_invoice_tree4" string="B2B Refunds" id="account.menu_action_invoice_tree4" parent="account.menu_finance_payables"/>
+
+
+        <record id="account_voucher.action_vendor_receipt" model="ir.actions.act_window">
+            <field name="name">B2C Payments</field>
+        </record>
+
+        <menuitem action="account_voucher.action_vendor_receipt" icon="STOCK_JUSTIFY_FILL" sequence="12"
+            string="B2C Payments" id="account_voucher.menu_action_vendor_receipt"  parent="account.menu_finance_receivables"/>
+
+        <record id="account_voucher.action_vendor_payment" model="ir.actions.act_window">
+            <field name="name">B2B Payments</field>
+        </record>
+        
+        <menuitem action="account_voucher.action_vendor_payment" icon="STOCK_JUSTIFY_FILL" sequence="12"
+            string="B2B Payments" id="account_voucher.menu_action_vendor_payment"  parent="account.menu_finance_payables"/>
+        
+        <record id="base.action_partner_customer_form" model="ir.actions.act_window">
+            <field name="name">B2C</field>
+        </record>
+        
+        <menuitem id="account.menu_account_customer" name="B2C"
+            parent="account.menu_finance_receivables"
+            action="base.action_partner_customer_form" sequence="100"/>
+
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">B2B</field>
+        </record>
+
+        <menuitem id="account.menu_account_supplier" name="B2B"
+            parent="account.menu_finance_payables"
+            action="base.action_partner_supplier_form" sequence="100"/>
+    </data>
+</openerp>

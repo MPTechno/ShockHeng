@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- B2B and B2c Payment Terms Filter -->
+        <record id="inherit_view_sales_order_filter" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//search/group/filter[3]" position="after">
+                    <filter string="Invoice per Type Basis" name="invoice_per_type" domain="[]" context="{'group_by':'type'}"/>
+                    <filter string="Invoice Per Payment Term Basis For B2B" name="invoice_per_payment_type_b2b" domain="[]" context="{'group_by':'payment_terms_id'}"/>
+                    <filter string="Invoice Per Payment Term Basis For B2C" name="invoice_per_payment_type_b2c" domain="[]" context="{'group_by':'b2c_payment_terms_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name='partner_id' position="after">
+                    <field name="payment_terms_id" string="Payment Terms For B2B"/>
+                    <field name="b2c_payment_terms_id" string="Payment Terms For B2C"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

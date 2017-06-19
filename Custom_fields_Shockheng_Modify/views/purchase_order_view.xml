@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Account Invoice form view inherited -->
+        <record model="ir.ui.view" id="inherit_custom_field_purchase_order_form_view">
+            <field name="name">purchase.order.form.view.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_shockheng_modifier.inherit_purchase_order_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='vehicle_no']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
