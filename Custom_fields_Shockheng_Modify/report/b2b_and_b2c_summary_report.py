@@ -48,6 +48,7 @@ class inherit_b2b_and_b2c_summary_report(report_sxw.rml_parse):
                 res['amount_total'] = l.amount_total or 0.00
                 res['invoice_number'] = l.number or ''
                 res['b2c_payment_terms_id'] = l.b2c_payment_terms_id.name or ''
+                res['invoice_description'] = l.invoice_description
                 res['display_currency'] = l.currency_id.symbol
                 result.append(res)
             result[0].update({'total_sale':total})
@@ -73,6 +74,7 @@ class inherit_b2b_and_b2c_summary_report(report_sxw.rml_parse):
                 res['amount_total'] = l.amount_total or 0.00
                 res['invoice_number'] = l.number or ''
                 res['payment_terms_id'] = l.payment_terms_id.name or ''
+                res['invoice_description'] = l.invoice_description
                 res['display_currency'] = l.currency_id.symbol
                 result.append(res)
             result[0].update({'total_outstanding':total})

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_custom_fields_view_invoice_total_summary_report_wiz" model="ir.ui.view">
+            <field name="name">B2B &amp; B2C Report</field>
+            <field name="model">invoice.total.summary</field>
+            <field name="inherit_id" ref="custom_sale_order_custmization.view_invoice_total_summary_report_wiz"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group" position="attributes">
+                    <attribute name="string">Summary Information</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

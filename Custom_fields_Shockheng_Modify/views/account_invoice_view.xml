@@ -56,5 +56,28 @@
         <menuitem id="account.menu_account_supplier" name="B2B"
             parent="account.menu_finance_payables"
             action="base.action_partner_supplier_form" sequence="100"/>
+            
+        <!-- Supplier Form View -->
+        <record model="ir.ui.view" id="inherit_custom_fields_account_invoice_supplier_form_view">
+            <field name="name">custom.fields.account.invoice.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="PaymentTerm_SO_Custom.inherit_account_invoice_supplier_form_view_1"/>
+            <field name="arch" type="xml">
+                <field name="payment_terms_id" position="after">
+                    <field name="invoice_description"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="inherit_custom_fields_account_invoice_customer_form_view">
+            <field name="name">custom.fields.account.invoice.customer.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="PaymentTerm_SO_Custom.inherit_account_invoice_form_view_1"/>
+            <field name="arch" type="xml">
+                <field name="b2c_payment_terms_id" position="after">
+                    <field name="invoice_description"/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>

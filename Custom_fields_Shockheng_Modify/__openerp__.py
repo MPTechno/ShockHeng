@@ -3,7 +3,7 @@
 
 {
     'name': 'Custom Fields Modifier Module',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Sale',
     'summary': 'Custom Fields Shockheng Modify',
     'description': """
@@ -22,6 +22,7 @@
              'views/purchase_order_view.xml',
              'views/product_view.xml',
              'views/account_invoice_view.xml',
+             'wizard/b2b_and_b2c_summary_view.xml',
              'report/b2b_and_b2c_summary_report_view.xml',
     ],
     'installable': True,
