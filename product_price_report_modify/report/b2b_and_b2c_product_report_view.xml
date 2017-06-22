@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="external_layout_product_list_report">
+            <t t-call="product_price_report_modify.external_layout_header_product_list_report" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_product_list_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                SIN HOCK HENG CUSHION MAKER
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                                BLK 7 SIN MING IND, ESTATE #01-90, SINGAPORE 575642
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="get_date(docs)['user_id'].company_id.logo" t-att-src="'data:image/png;base64,%s' % get_date(docs)['user_id'].company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                TEL : 6454 8160, 6454 8179 FAX : 6459 6486
+                                <br />
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="b2b_and_b2c_product_price">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="docs">
+                    <t t-call="product_price_report_modify.external_layout_product_list_report">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <h2>
+                                        <span t-if="get_date(docs)['type'] == 'b2c'">Product Pricelist Report</span>
+                                        <span t-if="get_date(docs)['type'] == 'b2b'">Product Pricelist Report</span>
+                                    </h2>
+                                </div>
+                                <div class="row mt32 mb32" id="informations">
+                                    <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                        <div class="col-xs-3">
+                                            <p><strong>Date From</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_start']" /></p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <p><strong>Date To</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_end']" /></p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <p><strong>Type</strong></p>
+                                            <p><span t-esc="get_date(docs)['type']" style="text-transform:uppercase;"/></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <table class="table table-condensed" width="100%">
+                                        <thead>
+                                            <tr style="border-top:1px solid black;">
+                                                <th width="10%">Car Brand</th>
+                                                <th width="10%">Car Model</th>
+                                                <th width="15%">Product/Service</th>
+                                                <th width="30%">Description</th>
+                                                <th width="10%" class="text-center">Unit Price</th>
+                                                <th width="10%" class="text-center">Quantity</th>
+                                                <th width="15%" class="text-right">Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="sale_order_tbody">
+                                            <span t-if="get_date(docs)['type'] == 'b2c'">
+                                                <t t-foreach="get_b2c_product_details(docs)" t-as="main">
+                                                    <t t-foreach="main['order_line']" t-as="order_line">
+                                                        <tr>
+                                                            <td width="10%">
+                                                                &#160; 
+                                                            </td>
+                                                            <td width="10%">
+                                                                &#160;
+                                                            </td>
+                                                            <td width="15%">
+                                                                <span t-esc="order_line.product_id.name or ''"/>
+                                                            </td>
+                                                            <td width="30%">
+                                                                <span t-esc="order_line.name or ''"/>
+                                                            </td>
+                                                            <td width="10%" class="text-center">
+                                                                <span t-esc="order_line.price_unit or 0.00"/>
+                                                            </td>
+                                                            <td width="10%" class="text-center">
+                                                                <span t-esc="order_line.product_uom_qty or 0.00"/>
+                                                            </td>
+                                                            <td width="15%" class="text-right">
+                                                                <span t-esc="order_line.price_subtotal or 0.00"/>
+                                                                &#160;<span t-esc="get_b2b_product_details(docs)[0]['display_currency']"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                            </span>
+                                            <span t-if="get_date(docs)['type'] == 'b2b'">
+                                                <t t-foreach="get_b2b_product_details(docs)" t-as="main">
+                                                    <t t-foreach="main['order_line']" t-as="order_line">
+                                                        <tr>
+                                                            <td width="10%">
+                                                                &#160; 
+                                                            </td>
+                                                            <td width="10%">
+                                                                &#160;
+                                                            </td>
+                                                            <td width="15%">
+                                                                <span t-esc="order_line.product_id.name or ''"/>
+                                                            </td>
+                                                            <td width="30%">
+                                                                <span t-esc="order_line.name or ''"/>
+                                                            </td>
+                                                            <td width="10%" class="text-center">
+                                                                <span t-esc="order_line.price_unit or 0.00"/>
+                                                            </td>
+                                                            <td width="10%" class="text-center">
+                                                                <span t-esc="order_line.product_uom_qty or 0.00"/>
+                                                            </td>
+                                                            <td width="15%" class="text-right">
+                                                                <span t-esc="order_line.price_subtotal or 0.00"/>
+                                                                &#160;<span t-esc="get_b2b_product_details(docs)[0]['display_currency']"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                            </span>
+                                        </tbody>
+                                   </table>
+                               </div>
+                               <div class="row">
+                                   <div class="col-xs-12" style="margin-top: 15px;margin-left: 10px;">
+                                        <div class="col-xs-4">
+                                        </div>
+                                        <div class="col-xs-2">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <table class="table table-condensed">
+                                                <span t-if="get_date(docs)['type'] == 'b2c'">
+                                                    <tr class="border-black">
+                                                        <td><strong>Total Sales Amount</strong></td>
+                                                        <td class="text-right">
+                                                            <strong><span t-esc="get_b2c_product_details(docs)[0]['total_sale']" /></strong>
+                                                            &#160;<span t-esc="get_b2c_product_details(docs)[0]['display_currency']"/>
+                                                        </td>
+                                                    </tr>
+                                                </span>
+                                                <span t-if="get_date(docs)['type'] == 'b2b'">
+                                                    <tr class="border-black">
+                                                        <td><strong>Total Sales Amount</strong></td>
+                                                        <td class="text-right">
+                                                            <strong><span t-esc="get_b2b_product_details(docs)[0]['amount_total_total']" /></strong>
+                                                            &#160;<span t-esc="get_b2b_product_details(docs)[0]['display_currency']"/>
+                                                        </td>
+                                                    </tr>
+                                                </span>
+                                            </table>
+                                        </div>
+                                   </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>
