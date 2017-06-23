@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="stock_product_type_1" model="stock.product.type">
+            <field name="name">Fabric Stock</field>
+        </record>
+        <record id="stock_product_type_2" model="stock.product.type">
+            <field name="name">Windscreen Stock</field>
+        </record>
+
+    </data>
+</openerp>

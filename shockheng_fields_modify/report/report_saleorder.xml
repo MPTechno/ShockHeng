@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="external_layout_sale_order_document_report">
+            <t t-call="shockheng_fields_modify.external_layout_header_sale_order_document_report" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_sale_order_document_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                SIN HOCK HENG CUSHION MAKER
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                                BLK 7 SIN MING IND, ESTATE #01-90, SINGAPORE 575642
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="docs.company_id.logo" t-att-src="'data:image/png;base64,%s' % docs.company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                TEL : 6454 8160, 6454 8179 FAX : 6459 6486
+                                <br />
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="report_sale_order">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="docs">
+                    <t t-call="shockheng_fields_modify.external_layout_sale_order_document_report">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <h2>
+                                <span t-if="docs.state not in ['draft','sent']">Sale Order For :</span>
+                                <span t-if="docs.state in ['draft','sent']">Quotation For :</span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    Customer Name &#160;&#160;&#160;&#160;&#160;&#160;
+                                                  &#160;&#160;&#160;&#160;
+                                                  :&#160;&#160;
+                                                  <span t-esc="docs.partner_id.name"/>
+                                    <br/>
+                                    Addess &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                           &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                           :&#160;&#160;
+                                    <span t-esc="docs.partner_id.street" /><br/>
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;
+                                    :&#160;&#160;
+                                    <t t-if="docs.partner_id.city">
+                                        <span t-esc="docs.partner_id.city" />,
+                                    </t>
+                                    <t t-if="docs.partner_id.state_id">
+                                        <span t-esc="docs.partner_id.state_id.name" />
+                                    </t>
+                                    <t t-if="docs.partner_id.zip">
+                                        <span t-esc="docs.partner_id.zip" />
+                                    </t><br/>
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;
+                                    :&#160;&#160;
+                                    <t t-if="docs.partner_id.country_id">
+                                        <span t-esc="docs.partner_id.country_id.name" />
+                                    </t>
+                                    <br/>
+                                    Phone Number &#160;&#160;&#160;&#160;&#160;&#160;
+                                                  &#160;&#160;&#160;&#160;&#160;&#160;
+                                                  :&#160;&#160;
+                                                  <span t-esc="docs.partner_id.phone"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <h2>
+                                <span t-esc="docs.name"/>
+                            </h2>
+                            <div class="row mt32 mb32" id="informations">
+                                <div t-if="docs.client_order_ref" class="col-xs-3">
+                                    <strong>Your Reference:</strong>
+                                    <p t-field="docs.client_order_ref"/>
+                                </div>
+                                <div t-if="docs.date_order" class="col-xs-3">
+                                    <strong t-if="docs.state not in ['draft','sent']">Date Ordered:</strong>
+                                    <strong t-if="docs.state in ['draft','sent']">Quotation Date:</strong>
+                                    <p t-field="docs.date_order"/>
+                                </div>
+                                <div t-if="docs.user_id.name" class="col-xs-3">
+                                    <strong>Sales Person:</strong>
+                                    <p t-field="docs.user_id.name"/>
+                                </div>
+                            </div>
+                            
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Taxes</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Unit Price</th>
+                                        <th groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                               </thead>
+                               <tbody class="sale_tbody">
+                                    <tr t-foreach="docs.order_line" t-as="l">
+                                        <td>
+                                           <span t-field="l.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="', '.join(map(lambda x: x.name, l.tax_id))"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.product_uom_qty"/>
+                                            <span groups="product.group_uom" t-field="l.product_uom"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.price_unit"/>
+                                        </td>
+                                        <td groups="sale.group_discount_per_so_line">
+                                            <span t-field="l.discount"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.price_subtotal"
+                                                t-field-options='{"widget": "monetary", "display_currency": "docs.pricelist_id.currency_id"}'/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-4 pull-right">
+                                    <table class="table table-condensed">
+                                        <tr class="border-black">
+                                            <td><strong>Sub Total</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="docs.amount_untaxed"
+                                                    t-field-options='{"widget": "monetary", "display_currency": "docs.pricelist_id.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taxes</td>
+                                            <td class="text-right">
+                                                <span t-field="docs.amount_tax"
+                                                    t-field-options='{"widget": "monetary", "display_currency": "docs.pricelist_id.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black">
+                                            <td><strong>Total Amount</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="docs.amount_total"
+                                                    t-field-options='{"widget": "monetary", "display_currency": "docs.pricelist_id.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <p t-field="docs.note" />
+                            <p t-if="docs.payment_term.note">
+                                <strong>Payment Term:</strong>
+                                <span t-field="docs.payment_term.note"/>
+                            </p>
+                            <div class="oe_structure"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

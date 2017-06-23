@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_followup_account_invoice_form_view">
+            <field name="name">account.invoice.followup.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="fiscal_position" position="after">
+                    <field name="car_name" readonly="1"/>
+                    <field name="car_brand" readonly="1"/>
+                    <field name="car_model" readonly="1"/>
+                    <field name="payment_amount_due" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
