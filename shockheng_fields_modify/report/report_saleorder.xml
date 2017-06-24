@@ -47,46 +47,22 @@
                                 <span t-if="docs.state in ['draft','sent']">Quotation For :</span>
                             </h2>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-8">
                                     Customer Name &#160;&#160;&#160;&#160;&#160;&#160;
                                                   &#160;&#160;&#160;&#160;
                                                   :&#160;&#160;
                                                   <span t-esc="docs.partner_id.name"/>
                                     <br/>
-                                    Addess &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                           &#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                           :&#160;&#160;
-                                    <span t-esc="docs.partner_id.street" /><br/>
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;
-                                    :&#160;&#160;
-                                    <t t-if="docs.partner_id.city">
-                                        <span t-esc="docs.partner_id.city" />,
-                                    </t>
-                                    <t t-if="docs.partner_id.state_id">
-                                        <span t-esc="docs.partner_id.state_id.name" />
-                                    </t>
-                                    <t t-if="docs.partner_id.zip">
-                                        <span t-esc="docs.partner_id.zip" />
-                                    </t><br/>
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    &#160;&#160;
-                                    :&#160;&#160;
-                                    <t t-if="docs.partner_id.country_id">
-                                        <span t-esc="docs.partner_id.country_id.name" />
-                                    </t>
-                                    <br/>
-                                    Phone Number &#160;&#160;&#160;&#160;&#160;&#160;
+                                    Address     &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                                &#160;&#160;&#160;&#160;&#160;&#160;
+                                                :&#160;&#160;
+                                                <div t-field="docs.partner_id" style="margin-left: 38%;margin-top: -18px;" 
+                                                     t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+                                    Phone Number  &#160;&#160;&#160;&#160;&#160;&#160;
                                                   &#160;&#160;&#160;&#160;&#160;&#160;
                                                   :&#160;&#160;
-                                                  <span t-esc="docs.partner_id.phone"/>
+                                                  <span t-esc="docs.partner_id.phone" style="margin-top: 8px;" />
                                     <br/>
                                 </div>
                             </div>

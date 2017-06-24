@@ -14,7 +14,6 @@
         'sale',
         'account_followup',
         'stock',
-        'salesorder_modifier_module',
     ],
     'data': [
              'security/ir.model.access.csv',
