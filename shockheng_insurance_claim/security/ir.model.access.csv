@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_insurance_claims,vehicle.insurance.claims,model_vehicle_insurance_claims,fleet.group_fleet_user,1,1,1,0
+access_vehicle_insurance_claims_manager,vehicle.insurance.claims.manager,model_vehicle_insurance_claims,fleet.group_fleet_manager,1,1,1,1
+access_vehicle_insurance_claims_sale,vehicle.insurance.claims.sale.user,model_vehicle_insurance_claims,base.group_sale_salesman,1,1,1,0
+access_vehicle_insurance_claims_manager_sale,vehicle.insurance.claims.sale.manager,model_vehicle_insurance_claims,base.group_sale_manager,1,1,1,1
+access_vehicle_insurance_claims_line,vehicle.insurance.claims.line,model_vehicle_insurance_claims_line,fleet.group_fleet_user,1,1,1,0
+access_vehicle_insurance_claims_line_manager,vehicle.insurance.claims.line.manager,model_vehicle_insurance_claims_line,fleet.group_fleet_manager,1,1,1,1
+access_vehicle_insurance_claims_line_sale,vehicle.insurance.claims.line.sale.user,model_vehicle_insurance_claims_line,base.group_sale_salesman,1,1,1,0
+access_vehicle_insurance_claims_line_manager_sale,vehicle.insurance.claims.line.sale.manager,model_vehicle_insurance_claims_line,base.group_sale_manager,1,1,1,1

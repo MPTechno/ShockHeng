@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Insurance Claims sequences -->
+        <record id="sequence_insurance_claims_code" model="ir.sequence.type">
+            <field name="name">Insurance Claims</field>
+            <field name="code">insurance.claims</field>
+        </record>
+        <record id="sequence_insurance_claims" model="ir.sequence">
+            <field name="name">Insurance Claims sequence</field>
+            <field name="code">insurance.claims</field>
+            <field name="prefix">INS/%(year)s/</field>
+            <field name="padding">3</field>
+        </record>
+    </data>
+</openerp>
