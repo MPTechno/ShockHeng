@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+        <template id="external_layout_inventory_aging_template">
+            <t t-call="custom_shockheng_warehouse_modify.external_layout_header_inventory_aging_template" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_inventory_aging_template">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                SIN HOCK HENG CUSHION MAKER
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                                BLK 7 SIN MING IND, ESTATE #01-90, SINGAPORE 575642
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="get_date(docs)['user_id'].company_id.logo" t-att-src="'data:image/png;base64,%s' % get_date(docs)['user_id'].company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                TEL : 6454 8160, 6454 8179 FAX : 6459 6486
+                                <br />
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="report_inventory_aging_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="docs">
+                    <t t-call="custom_shockheng_warehouse_modify.external_layout_inventory_aging_template">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                <h2>
+                                    Inventory Aging Report
+                                </h2>
+                            </div>
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <div class="col-xs-3">
+                                        <p><strong>Date From</strong></p>
+                                        <p><span t-esc="get_date(docs)['date_start']" /></p>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <p><strong>Date To</strong></p>
+                                        <p><span t-esc="get_date(docs)['date_end']" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <thead>
+                                        <tr style="border-top:1px solid black;">
+                                            <th width="17%" class="text-left">Date of Movement</th>
+                                            <th width="17%" class="text-left">Product Number</th>
+                                            <th width="18%" class="text-left">Product Name</th>
+                                            <th width="18%" class="text-left">Current Warehouse</th>
+                                            <th width="17%" class="text-center">Quantity on hand</th>
+                                            <th width="13%" class="text-right">Cost Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="inventory_aging_tbody">
+                                        <span>
+                                            <t t-foreach="get_inventory_details(docs)" t-as="main">
+                                                <tr>
+                                                    <td width="17%">
+                                                        <span t-esc="main['date_of_movement'] or ''"/>
+                                                    </td>
+                                                    <td width="17%">
+                                                        <span t-esc="main['product_number'] or ''"/>
+                                                    </td>
+                                                    <td width="18%">
+                                                        <span t-esc="main['product_id'] or ''"/>
+                                                    </td>
+                                                    <td width="18%">
+                                                        <span t-esc="main['current_parent_location'] or ''"/>
+                                                        /
+                                                        <span t-esc="main['current_location'] or ''"/>
+                                                    </td>
+                                                    <td width="17%" class="text-center">
+                                                        <span t-esc="main['quantity_on_hand'] or 0.0"/>
+                                                    </td>
+                                                    <td width="13%" class="text-right">
+                                                        <span t-esc="main['cost_price'] or 0.00"/>
+                                                        &#160;<span t-esc="main['display_currency']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </span>
+                                    </tbody>
+                               </table>
+                           </div>
+                           <div class="col-xs-12" style="margin-top: 25px;margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <tr class="border-black">
+                                        <td class="text-left">
+                                            Reg : 277102/OOJ
+                                        </td>
+                                        <td class="text-right">
+                                            <td class="text-right">
+                                                <strong style="padding-right:15%;">Total</strong>
+                                                <strong><span t-esc="get_inventory_details(docs)[0]['amount_total']" /></strong>
+                                                        &#160;<span t-esc="get_inventory_details(docs)[0]['display_currency']"/>
+                                            </td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-left: 10px;">
+                                <table class="table table-condensed" width="100%">
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            Note : All cheque payments should be crossed and made payable to <br />
+                                                   &#160;&#160;&#160;&#160;&#160;&#160;
+                                                   &#160;&#160;
+                                                   SIN HOCK HENG CUSHION MAKER at the above address. 
+                                        </td>
+                                        <td class="text-right" style="font-size: 10px;">
+                                             <strong style="float:right;">
+                                                    SIN HOCK HENG CUSHION MAKER
+                                             </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 25px;margin-left: 10px;">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="text-left" style="font-size: 10px;">
+                                            Received By &#160; _____________________________________
+                                        </td>
+                                        <td class="text-right" style="font-size: 10px;">
+                                            &#160; _________________________________
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                		</div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+	</data>
+</openerp>
