@@ -16,12 +16,22 @@ class Product_Pricelist_Report(models.TransientModel):
 
     @api.multi
     def print_report(self):
-        data = self.read([])[0]
-        datas = {
-             'ids': [],
-             'model': 'sale.order',
-             'form': data,
-            }
-        return self.env['report'].get_action(self, 'product_price_report_modify.b2b_and_b2c_product_price',
-                                             data=datas)
-
+        xml_id = 'sale.view_order_tree'
+        tree_view_id = self.env.ref(xml_id).id
+        xml_id = 't20_sale.view_salesorder_proposal_form'
+        # xml_id = 't20_core.view_analytic_code_budget_form'
+        form_view_id = self.env.ref(xml_id).id
+        return {
+            'name': _('CONTRACTS'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'views': [(tree_view_id, 'tree'), (form_view_id, 'form')],
+            'res_model': 'sale.order',
+            'domain': [('job_id', 'in', self.ids), ('type', '=', 'prime'),
+                       ('parent_id', '=', False)],
+            'type': 'ir.actions.act_window',
+            'context': {
+                'default_job_id': self._ids[0],
+                'default_type': 'prime',
+            },
+        }

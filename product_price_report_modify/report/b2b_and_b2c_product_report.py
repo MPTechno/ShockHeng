@@ -41,6 +41,8 @@ class b2b_and_b2c_product_report(report_sxw.rml_parse):
             for l in sale_order_ids:
                 res = {}
                 total += l.amount_total
+                res['car_brand'] = l.car_brand_id.name
+                res['car_model'] = l.car_model_id.name
                 res['order_line'] = l.order_line
                 res['display_currency'] = l.currency_id.symbol
                 result.append(res)
@@ -62,6 +64,8 @@ class b2b_and_b2c_product_report(report_sxw.rml_parse):
             for l in sale_order_ids:
                 res = {}
                 total += l.amount_total
+                res['car_brand'] = l.car_brand_id.name
+                res['car_model'] = l.car_model_id.name
                 res['order_line'] = l.order_line
                 res['display_currency'] = l.currency_id.symbol
                 result.append(res)

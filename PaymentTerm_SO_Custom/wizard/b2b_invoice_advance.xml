@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_view_b2b_advance_payment_inv" model="ir.ui.view">
+            <field name="name">B2B Invoice Order</field>
+            <field name="model">b2b.advance.payment.inv</field>
+            <field name="inherit_id" ref="custom_sale_order_custmization.view_b2b_advance_payment_inv"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="payment_terms_id" style="width:30% !important;"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="external_layout_hr_payslip_report">
+            <t t-call="shockheng_hr_payroll_report_modify.external_layout_header_hr_payslip_report" />
+            <t t-raw="0" />
+            <t t-call="shockheng_hr_payroll_report_modify.external_layout_footer_hr_payslip_report" />
+        </template>
+
+        <template id="external_layout_header_hr_payslip_report">
+            <div class="header">
+                <div class="row">
+                     <div class="col-xs-6 col-sm-6" style="font-size: 8pt; padding-top:8px;">
+                        <b>Payslip for</b><span style="padding-left:55px;"/>:&#160;&#160;<t t-esc="o.date_from"/>&#160;<b>TO</b>&#160;<span t-esc="o.date_to" /><br/>
+                        <b>Name of employer</b><span style="padding-left:16px;"/>:&#160;&#160;<t t-esc="o.company_id.name"/><br/>
+                        <b>Name of employee</b><span style="padding-left:15px;"/>:&#160;&#160;<t t-esc="o.employee_id.name"/><br/>
+                     </div>
+                     <div class="col-xs-6 col-sm-6" style="font-size: 8pt; padding-top:8px;">
+                        <br />
+                        <br />
+                        <b>ID No</b><span style="padding-left:15px;"/>:&#160;&#160;<t t-esc="o.number"/><br/>
+                     </div>
+                </div>
+            </div>
+        </template>
+        <template id="custom_hr_payslip_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="shockheng_hr_payroll_report_modify.external_layout_hr_payslip_report">
+                        <div class="page">
+                            <div class="row" style="font-size:10px;">
+                                <div class="col-xs-12" style="margin-top: 10px;">
+                                    <table class="table table-condensed" width="100%">
+                                        <thead>
+                                            <tr style="border-top:1px solid black;">
+                                                <th>Item</th>
+                                                <th>Amount</th>
+                                                <th width="5%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                    <td><strong>Total Salary</strong></td>
+                                                    <td>
+                                                        <span t-if="get_payslip_lines_salary(o)">
+                                                            <strong>
+                                                                <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                                <span t-esc="get_payslip_lines_salary(o)[0]['total_salary']" />
+                                                            </strong>
+                                                        </span>
+                                                        <span t-if="not get_payslip_lines_salary(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong>(A)</strong></td>
+                                                </tr>
+                                                <span t-if="get_payslip_lines_salary(o)">
+                                                    <tr t-foreach="get_payslip_lines_salary(o)" t-as="line">
+                                                        <td><span t-esc="line['code'] or None"/></td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="line['amount'] or 0.00"/>
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <span t-if="not get_payslip_lines_salary(o)">
+                                                    <tr>
+                                                        <td>None</td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <tr>
+                                                    <td>OT (hrs)</td>
+                                                    <td>
+                                                        <span t-if="get_total_hours(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="get_total_hours(o)['overtime_hours'] or 0.00"/>
+                                                        </span>
+                                                        <span t-if="not get_total_hours(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>OT pay</td>
+                                                    <td>
+                                                        <span t-if="get_total_hours(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="get_total_hours(o)['overtime_pay'] or 0.00"/>
+                                                        </span>
+                                                        <span t-if="not get_total_hours(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong></strong></td>
+                                                </tr>
+                                                <tr >
+                                                    <td><strong>Total Allowances</strong></td>
+                                                    <td>
+                                                        <span t-if="get_payslip_lines_allowance(o)">
+                                                            <strong>
+                                                                <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                                <span t-esc="get_payslip_lines_allowance(o)[0]['total_allowance']" />
+                                                            </strong>
+                                                        </span>
+                                                        <span t-if="not get_payslip_lines_allowance(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong>(B)</strong></td>
+                                                </tr>
+                                                <span t-if="get_payslip_lines_allowance(o)">
+                                                    <tr t-foreach="get_payslip_lines_allowance(o)" t-as="line">
+                                                        <td><span t-esc="line['code'] or None"/></td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="line['amount'] or 0.00"/>
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <span t-if="not get_payslip_lines_allowance(o)">
+                                                    <tr>
+                                                        <td>None</td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <tr>
+                                                    <td><strong>Total Deduction</strong></td>
+                                                    <td>
+                                                        <span t-if="get_payslip_lines_deductions(o)">
+                                                            <strong>
+                                                                <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                                <span t-esc="get_payslip_lines_deductions(o)[0]['total_deductions']" />
+                                                            </strong>
+                                                        </span>
+                                                        <span t-if="not get_payslip_lines_deductions(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong>(C)</strong></td>
+                                                </tr>
+                                                <span t-if="get_payslip_lines_deductions(o)">
+                                                    <tr t-foreach="get_payslip_lines_deductions(o)" t-as="line">
+                                                        <td><span t-esc="line['code'] or None"/></td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="line['amount'] or 0.00"/>
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <span t-if="not get_payslip_lines_deductions(o)">
+                                                    <tr>
+                                                        <td>None</td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <tr>
+                                                    <td><strong>Other Additional Payments</strong></td>
+                                                    <td>
+                                                        <span t-if="get_payslip_lines_other_additional_payment(o)">
+                                                            <strong>
+                                                                <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                                <span t-esc="get_payslip_lines_other_additional_payment(o)[0]['total_additional_payment']" />
+                                                            </strong>
+                                                        </span>
+                                                        <span t-if="not get_payslip_lines_other_additional_payment(o)">
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%"><strong>(D)</strong></td>
+                                                </tr>
+                                                <span t-if="get_payslip_lines_other_additional_payment(o)">
+                                                    <tr t-foreach="get_payslip_lines_other_additional_payment(o)" t-as="line">
+                                                        <td><span t-esc="line['code'] or None"/></td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            <span t-esc="line['amount'] or 0.00"/>
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                                <span t-if="not get_payslip_lines_other_additional_payment(o)">
+                                                    <tr>
+                                                        <td>None</td>
+                                                        <td>
+                                                            <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                                            0.00
+                                                        </td>
+                                                        <td width="5%"><strong></strong></td>
+                                                    </tr>
+                                                </span>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="external_layout_footer_hr_payslip_report">
+            <div class="footer" style="font-size:7pt;">
+                <div class="row">
+                     <div class="col-xs-12" style="font-size: 8pt; padding-top:8px;border-top:1px solid black;">
+                        <b>Net pay “(A)+(B)” – “(C)+(D)”</b>
+                            <strong>
+                                <span style="padding-left:50px;"/>:&#160;&#160;
+                                    <span t-if="get_payslip_net_pay(o)">
+                                        <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                        <span t-esc="get_payslip_net_pay(o)['total_net_pay']"/>
+                                    </span>
+                                    <span t-if="not get_payslip_net_pay(o)">
+                                        <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                        0.00
+                                    </span>
+                            </strong>
+                        <br/>
+                        <b>Date of payment</b>
+                            <strong>
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;
+                                :&#160;&#160;
+                                <span t-if="o.date" t-esc="o.date"/>
+                            </strong>
+                        <br/>
+                        <b>Mode of payment</b>
+                            <strong>
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;
+                                :&#160;&#160;
+                                <span t-if="o.payment_terms" t-esc="o.payment_terms.name"/>
+                            </strong>
+                        <br/>
+                        <b>Employee's CPF contribution</b>
+                            <strong>
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                :&#160;&#160;
+                                <span t-if ="get_payslip_lines_for_cpf_employer(o)">
+                                    <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                    <span t-esc="get_payslip_lines_for_cpf_employer(o)[0]['total_cpf_employer']" />
+                                </span>
+                                <span t-if ="not get_payslip_lines_for_cpf_employer(o)">
+                                    <span t-esc="get_currency(o)['display_currency']"/>&#160;&#160;
+                                    0.00
+                                </span>
+                            </strong>
+                        <br/>
+                     </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</openerp>

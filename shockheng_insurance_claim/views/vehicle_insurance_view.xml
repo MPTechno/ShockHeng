@@ -13,6 +13,7 @@
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="currency_id" groups="base.group_multi_currency"/>
                     <field name="amount_total" sum="Total Amount"/>
+                    <field name="state" string="Status"/>
                 </tree>
             </field>
         </record>
@@ -25,9 +26,10 @@
                     <header>
                         <button name="action_insurence_confirm" string="Confirm" type="object" states="draft"/>
                         <button name="action_insurence_approve" string="Approve" type="object" states="confirmed"/>
+                        <button name="action_insurence_paid" states="approve" string="Paid" type="object"/>
                         <button name="action_insurence_refuse" string="Refuse" type="object" states="confirmed"/>
                         <button name="action_insurence_draft" states="refuse" string="Set to Draft" type="object"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,paid"/>
                     </header>
                     <sheet string="Vehicle Insurance">
                         <h1>
@@ -44,6 +46,7 @@
                             </group>
                             <group>
                                 <field name="insurance_date" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="vehicle_number"/>
                                 <div groups="base.group_multi_currency">
                                     <field name="currency_id" options="{'no_create': True, 'no_open': True}" class="oe_inline"/>
                                 </div>

@@ -16,5 +16,18 @@
             </field>
         </record>
         
+        <record model="ir.ui.view" id="inherit_account_invoice_form_view_1">
+            <field name="name">account.invoice.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="account_id" position="after">
+                    <field name="b2c_payment_terms_id" />
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>

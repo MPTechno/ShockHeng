@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_hr_payslip_form_view">
+            <field name="name">hr.payslip.form.view.inherit</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[3]/group/group[@name='accounting']/field[@name='paid']" position="after">
+                    <field name="payment_terms" />
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="inherit_hr_contract_form_view">
+            <field name="name">hr.contractp.form.view.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="wage" position="after">
+                    <field name="overtime_pay" required='1'/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

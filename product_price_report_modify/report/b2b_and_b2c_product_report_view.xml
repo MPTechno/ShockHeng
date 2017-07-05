@@ -12,10 +12,27 @@
                 <div class="row">
                     <div class="col-xs-12 text-center" style="padding-top: 8px;">
                          <strong style="font-size: 26px;">
-                                SIN HOCK HENG CUSHION MAKER
+                                <span t-esc="get_date(docs)['user_id'].company_id.name"/>
                          </strong><br/>
                          <div style="font-size: 14px;">
-                                BLK 7 SIN MING IND, ESTATE #01-90, SINGAPORE 575642
+                            <span t-if="get_date(docs)['user_id'].company_id.street">
+                                <span t-esc="get_date(docs)['user_id'].company_id.street"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.street2">
+                                <span t-esc="get_date(docs)['user_id'].company_id.street2"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.city">
+                                <span t-esc="get_date(docs)['user_id'].company_id.city"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.state_id">
+                                <span t-esc="get_date(docs)['user_id'].company_id.state_id.name"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.zip">
+                                <span t-esc="get_date(docs)['user_id'].company_id.zip"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.country_id">
+                                <span t-esc="get_date(docs)['user_id'].company_id.country_id.name"/>
+                            </span>
                          </div>
                     </div>
                      <div class="col-xs-4">
@@ -24,8 +41,18 @@
                      </div>
                      <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
                             <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
-                                TEL : 6454 8160, 6454 8179 FAX : 6459 6486
-                                <br />
+                                <span t-if="get_date(docs)['user_id'].company_id.phone">
+                                    TEL : <span t-esc="get_date(docs)['user_id'].company_id.phone"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['user_id'].company_id.fax">
+                                    FAX : <span t-esc="get_date(docs)['user_id'].company_id.fax"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['user_id'].company_id.email">
+                                    EMAIL : <span t-esc="get_date(docs)['user_id'].company_id.email"/>
+                                    <br />
+                                </span>
                                 SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
                                 &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
                           </div>
@@ -68,8 +95,8 @@
                                     <table class="table table-condensed" width="100%">
                                         <thead>
                                             <tr style="border-top:1px solid black;">
-                                                <th width="10%">Car Brand</th>
-                                                <th width="10%">Car Model</th>
+                                                <th width="10%">Vehicle Brand</th>
+                                                <th width="10%">Vehicle Model</th>
                                                 <th width="15%">Product/Service</th>
                                                 <th width="30%">Description</th>
                                                 <th width="10%" class="text-center">Unit Price</th>
@@ -83,10 +110,10 @@
                                                     <t t-foreach="main['order_line']" t-as="order_line">
                                                         <tr>
                                                             <td width="10%">
-                                                                &#160; 
+                                                                <span t-esc="main['car_brand'] or ''"/> 
                                                             </td>
                                                             <td width="10%">
-                                                                &#160;
+                                                                <span t-esc="main['car_model'] or ''"/>
                                                             </td>
                                                             <td width="15%">
                                                                 <span t-esc="order_line.product_id.name or ''"/>
@@ -113,10 +140,10 @@
                                                     <t t-foreach="main['order_line']" t-as="order_line">
                                                         <tr>
                                                             <td width="10%">
-                                                                &#160; 
+                                                                <span t-esc="main['car_brand'] or ''"/> 
                                                             </td>
                                                             <td width="10%">
-                                                                &#160;
+                                                                <span t-esc="main['car_model'] or ''"/>
                                                             </td>
                                                             <td width="15%">
                                                                 <span t-esc="order_line.product_id.name or ''"/>

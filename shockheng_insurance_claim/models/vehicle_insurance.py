@@ -30,6 +30,7 @@ class VehicleInsuranceClaims(models.Model):
             ('draft','Draft'),
             ('confirmed','Confirmed'),
             ('approve','Approved'),
+            ('paid','Paid'),
             ('refuse','Refuse')],'Status',default='draft')
     insurance_date = fields.Date(string='Insurance Date',
             help="Keep empty to use the current date")
@@ -44,6 +45,7 @@ class VehicleInsuranceClaims(models.Model):
              default=_default_company, track_visibility='always')
     amount_total = fields.Float(string='Total', digits=dp.get_precision('Account'),
              store=True, readonly=True, compute='_compute_amount')
+    vehicle_number = fields.Char('Vehicle Number')
 
     _sql_constraints = [
         ('number_uniq', 'unique(number)',
@@ -89,6 +91,17 @@ class VehicleInsuranceClaims(models.Model):
         """
         for on in self:
             on.state = 'approve'
+
+    @api.multi
+    def action_insurence_paid(self):
+        """
+        This method is used to change the state 
+        to paid of the Vehicle Insurance.
+        --------------------------------------------
+        @param self : object pointer
+        """
+        for on in self:
+            on.state = 'paid'
 
     @api.multi
     def action_insurence_draft(self):

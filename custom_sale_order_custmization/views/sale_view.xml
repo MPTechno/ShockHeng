@@ -53,6 +53,9 @@
                     <field name="date_in" />
                     <field name="date_out" />
                 </xpath>
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="employee_id" />
+                </xpath>
                 <xpath expr="//form/header/button[@name='print_quotation'][2]" position="after">
                     <button name="print_b2c_invoice" string="Print B2C Invoice" type="object" class="oe_highlight"
                      attrs="{'invisible': [('b2c_invoice', '=', False)]}"/>
@@ -84,9 +87,26 @@
                 <field name="state" position="after">
                     <field name="type" string="Type" />
                 </field>
+                <field name="partner_id" position="after">
+                    <field name="vehicle_number" string="Vehicle Number" />
+                </field>
             </field>
         </record>
-
+        <!-- Sale Order Search -->
+        <record id="inherit_view_sales_order_filter_new" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//search/field[@name='product_id']" position="after">
+                    <field name="vehicle_number" string="Vehicle Number"/>
+                </xpath>
+                <xpath  expr="//search/group/filter[3]" position="after">
+                    <filter string="Vehicle Number" name="vehicle_number" domain="[]" context="{'group_by':'vehicle_number'}"/>
+                </xpath>
+            </field>
+        </record>
+        
         <!-- B2C Customer -->
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="name">B2C Customer</field>

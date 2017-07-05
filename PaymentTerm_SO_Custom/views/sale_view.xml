@@ -8,10 +8,11 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <field name="payment_term" position="attributes">
-                     <attribute name="attrs">{'invisible': [('type','=','b2b')]}</attribute>
+                    <attribute name="invisible">True</attribute>
                 </field>
                 <field name="client_order_ref" position="after">
-                    <field name="payment_terms_id" attrs="{ 'invisible':[('type', '!=', 'b2b')]}"/>
+                    <field name="payment_terms_id" attrs="{'invisible':['|',('payment_terms_id','=',False),('b2c_payment_terms_id','!=',False)]}"/>
+                    <field name="b2c_payment_terms_id" attrs="{'invisible':['|',('payment_terms_id','!=',False),('b2c_payment_terms_id','=',False)]}"/>
                 </field>
             </field>
         </record>

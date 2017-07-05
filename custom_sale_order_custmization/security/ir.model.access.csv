@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_car_brand,car.brand,model_car_brand,base.group_sale_salesman,1,1,1,0
+access_car_brand_manager,car.brand salemanager,model_car_brand,base.group_sale_manager,1,1,1,1
+access_car_model,car.model,model_car_model,base.group_sale_salesman,1,1,1,0
+access_car_model_manager,car.model salemanager,model_car_model,base.group_sale_manager,1,1,1,1

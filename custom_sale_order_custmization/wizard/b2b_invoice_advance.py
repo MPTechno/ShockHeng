@@ -1,22 +1,31 @@
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+import time
+from datetime import datetime
+from openerp import api, fields, models
+from openerp.tools.translate import _
+
+
+class Invoice_Total_Summary(models.TransientModel):
+
+    _name = 'invoice.total.summary'
+    _description = 'Print Total Summary Report of the given Date'
+
+    start_date = fields.Date('Starting Date')
+    end_date = fields.Date('Ending Date')
+    type = fields.Selection([('b2b','B2B'),('b2c','B2C')])
+
+    @api.multi
+    def print_report(self):
+        data = self.read([])[0]
+        datas = {
+             'ids': [],
+             'model': 'account.invoice',
+             'form': data,
+            }
+        return self.env['report'].get_action(self, 'custom_sale_order_custmization.report_b2b_and_b2c_total',
+                                             data=datas)
+
+
 
 from openerp import api, fields, models
 from openerp.tools.translate import _
@@ -38,6 +47,7 @@ class b2b_advance_payment_inv(models.TransientModel):
         inv_obj = self.env['account.invoice']
         sale_obj = self.env['sale.order']
         ir_property_obj = self.env['ir.property']
+        journal_obj = self.env['account.journal']
         sale_id = self._context.get('active_ids', [])
         sale_ids = sale_obj.browse(sale_id)
         wizard = self
@@ -80,9 +90,11 @@ class b2b_advance_payment_inv(models.TransientModel):
             # create invoice
             customer = wizard.partner_id
             date = datetime.strptime(sale.date_order, "%Y-%m-%d %H:%M:%S").date()
+            journal_id = journal_obj.search([('type', '=', 'purchase')],limit=1)
             invoice = inv_obj.create({
                 'name': sale.client_order_ref or sale.name,
                 'date_invoice': date,
+                'journal_id': journal_id.id,
                 'origin': sale.name,
                 'type': 'in_invoice',
                 'reference': False,

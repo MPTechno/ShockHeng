@@ -6,7 +6,7 @@
             <field name="name">car.brand.form.view</field>
             <field name="model">car.brand</field>
             <field name="arch" type="xml">
-                <form string="Car Brand">
+                <form string="Vehicle Brand">
                     <sheet>
                         <group>
                             <group>
@@ -24,14 +24,14 @@
             <field name="name">car.brand.tree.view</field>
             <field name="model">car.brand</field>
             <field name="arch" type="xml">
-                <tree string="Car Brand">
+                <tree string="Vehicle Brand">
                     <field name="name" />
                 </tree>
             </field>
         </record>
 
         <record id="action_car_brand_config" model="ir.actions.act_window">
-            <field name="name">Car Brand's</field>
+            <field name="name">Vehicle Brand's</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">car.brand</field>
             <field name="view_id" ref="car_brand_tree_view"/>
@@ -42,7 +42,7 @@
             <field name="name">car.model.form.view</field>
             <field name="model">car.model</field>
             <field name="arch" type="xml">
-                <form string="Car Model">
+                <form string="Vehicle Model">
                     <sheet>
                         <group>
                             <group>
@@ -60,14 +60,14 @@
             <field name="name">car.model.tree.view</field>
             <field name="model">car.model</field>
             <field name="arch" type="xml">
-                <tree string="Car Model">
+                <tree string="Vehicle Model">
                     <field name="name" />
                 </tree>
             </field>
         </record>
 
         <record id="action_car_model_config" model="ir.actions.act_window">
-            <field name="name">Car Model's</field>
+            <field name="name">Vehicle Model's</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">car.model</field>
             <field name="view_id" ref="car_model_tree_view"/>

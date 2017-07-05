@@ -12,7 +12,7 @@
                         before validation.
                     </p>
                     <group>
-                        <field name="partner_id" required="1" string="Company Name"/>
+                        <field name="partner_id" required="1" string="Company Name" style="width:30% !important;"/>
                         <!-- <field name="advance_payment_method" class="oe_inline"
                             on_change="onchange_method(advance_payment_method, product_id)"/>
                         <field name="qtty" invisible="1"/>

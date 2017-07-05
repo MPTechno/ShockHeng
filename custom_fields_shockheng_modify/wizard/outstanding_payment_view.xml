@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_outstanding_payment_summary_report_wiz" model="ir.ui.view">
+            <field name="name">Purchase Outstanding Payment Report</field>
+            <field name="model">outstanding.payment.report</field>
+            <field name="arch" type="xml">
+            <form string="Print Report">
+                <group string="Outstanding Payment Information" col="4">
+                    <field name="start_date" required="1"/>
+                    <field name="end_date" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_outstanding_report_wizard" model="ir.actions.act_window">
+            <field name="name">Outstanding Payment Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">outstanding.payment.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_outstanding_payment_summary_report_wiz"></field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_purchase_outstanding_payment_report_root" 
+                  parent="base.menu_purchase_root"
+                  name="Report"
+                  sequence="1"/>
+        
+        <menuitem action="action_purchase_outstanding_report_wizard"
+                  id="menu_b2b_and_b2c_report" 
+                  parent="menu_purchase_outstanding_payment_report_root"
+                  name="Outstanding Payment Report"/>
+
+    </data>
+</openerp>

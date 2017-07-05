@@ -4,8 +4,8 @@ from openerp import api, fields, models
 class sale_order(models.Model):
     _inherit = 'sale.order'
 
-    car_brand_id = fields.Many2one('car.brand','Car Brand')
-    car_model_id = fields.Many2one('car.model','Car Model')
+    car_brand_id = fields.Many2one('car.brand','Vehicle Brand')
+    car_model_id = fields.Many2one('car.model','Vehicle Model')
     vehicle_number = fields.Char('Vehicle Number')
     b2b_invoice = fields.Boolean('B2B Invoice', copy=False)
     b2c_invoice = fields.Boolean('B2C Invoice', copy=False)
@@ -114,3 +114,4 @@ class sale_order_line(models.Model):
     date_in = fields.Datetime('Date In', default=fields.Datetime.now)
     date_out = fields.Datetime('Date Out', default=fields.Datetime.now)
     product_id = fields.Many2one('product.product', 'Product/Service Rendered', domain=[('sale_ok', '=', True)], change_default=True, readonly=True, states={'draft': [('readonly', False)]}, ondelete='restrict')
+    employee_id = fields.Many2one('hr.employee','Employee')

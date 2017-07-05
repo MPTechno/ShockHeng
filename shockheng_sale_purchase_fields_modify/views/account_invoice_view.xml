@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Account Invoice form Supplier view inherited -->
+        <record model="ir.ui.view" id="inherit_account_invoice_supplier_form_view_1">
+            <field name="name">account.invoice.supplier.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]/field[@name='invoice_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('purchase_ok','=', True)]</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="inherit_account_invoice_customer_form_view_1">
+            <field name="name">account.invoice.supplier.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]/field[@name='invoice_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('sale_ok','=', True)]</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Account Invoice form Supplier view inherited -->
+        <record model="ir.ui.view" id="inherit_invoice_tree_view_1">
+            <field name="name">account.invoice.tree.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

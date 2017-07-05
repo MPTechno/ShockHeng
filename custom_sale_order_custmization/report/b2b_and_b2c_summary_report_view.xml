@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+        <template id="external_layout_summary_invoice_report">
+            <t t-call="custom_sale_order_custmization.external_layout_header_summary_invoice_report" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_summary_invoice_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                <span t-esc="get_date(docs)['user_id'].company_id.name"/>
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                            <span t-if="get_date(docs)['user_id'].company_id.street">
+                                <span t-esc="get_date(docs)['user_id'].company_id.street"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.street2">
+                                <span t-esc="get_date(docs)['user_id'].company_id.street2"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.city">
+                                <span t-esc="get_date(docs)['user_id'].company_id.city"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.state_id">
+                                <span t-esc="get_date(docs)['user_id'].company_id.state_id.name"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.zip">
+                                <span t-esc="get_date(docs)['user_id'].company_id.zip"/>
+                            </span>
+                            <span t-if="get_date(docs)['user_id'].company_id.country_id">
+                                <span t-esc="get_date(docs)['user_id'].company_id.country_id.name"/>
+                            </span>
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="get_date(docs)['user_id'].company_id.logo" t-att-src="'data:image/png;base64,%s' % get_date(docs)['user_id'].company_id.logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                <span t-if="get_date(docs)['user_id'].company_id.phone">
+                                    TEL : <span t-esc="get_date(docs)['user_id'].company_id.phone"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['user_id'].company_id.fax">
+                                    FAX : <span t-esc="get_date(docs)['user_id'].company_id.fax"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['user_id'].company_id.email">
+                                    EMAIL : <span t-esc="get_date(docs)['user_id'].company_id.email"/>
+                                    <br />
+                                </span>
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="report_b2b_and_b2c_total">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="docs">
+                    <t t-call="custom_sale_order_custmization.external_layout_summary_invoice_report">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <h2>
+                                        <span t-if="get_date(docs)['type'] == 'b2c'">Sales Revenue Report</span>
+                                        <span t-if="get_date(docs)['type'] == 'b2b'">Sales Outstanding Report</span>
+                                    </h2>
+                                </div>
+                                <div class="row mt32 mb32" id="informations">
+                                    <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                        <div class="col-xs-3">
+                                            <p><strong>Date From</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_start']" /></p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <p><strong>Date To</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_end']" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <table class="table table-condensed" width="100%">
+                                        <thead>
+                                            <tr style="border-top:1px solid black;">
+                                                <th>Invoice Date</th>
+                                                <th>Invoice number</th>
+                                                <span t-if="get_date(docs)['type'] == 'b2c'">
+                                                    <th class="text-right">Sales Revenue Amount</th>
+                                                </span>
+                                                <span t-if="get_date(docs)['type'] == 'b2b'">
+                                                    <th class="text-right">Outstanding Amount</th>
+                                                </span>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <span t-if="get_date(docs)['type'] == 'b2c'">
+                                                <t t-foreach="get_b2c_details(docs)" t-as="main">
+                                                    <tr>
+                                                        <td>
+                                                            <span t-esc="main['date_invoice'] or ''"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="main['invoice_number'] or ''"/>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span t-esc="main['amount_total'] or 0.00"/>
+                                                            &#160;<span t-esc="main['display_currency']"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </span>
+                                            <span t-if="get_date(docs)['type'] == 'b2b'">
+                                                <t t-foreach="get_b2b_details(docs)" t-as="main">
+                                                    <tr>
+                                                        <td>
+                                                            <span t-esc="main['date_invoice'] or ''"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="main['invoice_number'] or ''"/>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span t-esc="main['amount_total'] or 0.00"/>
+                                                            &#160;<span t-esc="main['display_currency']"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </span>
+                                        </tbody>
+                                   </table>
+                               </div>
+                               <div class="row">
+                                <div class="col-xs-12" style="margin-top: 15px;margin-left: 10px;">
+                                    <div class="col-xs-4">
+                                    </div>
+                                    <div class="col-xs-2">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <table class="table table-condensed">
+                                            <span t-if="get_date(docs)['type'] == 'b2c'">
+                                                <tr class="border-black">
+                                                    <td><strong>Total Sales Revenue Amount</strong></td>
+                                                    <td class="text-right">
+                                                        <strong><span t-esc="get_b2c_details(docs)[0]['total_sale']" /></strong>
+                                                        &#160;<span t-esc="get_b2c_details(docs)[0]['display_currency']"/>
+                                                    </td>
+                                                </tr>
+                                            </span>
+                                            <span t-if="get_date(docs)['type'] == 'b2b'">
+                                                <tr class="border-black">
+                                                    <td><strong>Total Outstanding Amount</strong></td>
+                                                    <td class="text-right">
+                                                        <strong><span t-esc="get_b2b_details(docs)[0]['total_outstanding']" /></strong>
+                                                        &#160;<span t-esc="get_b2b_details(docs)[0]['display_currency']"/>
+                                                    </td>
+                                                </tr>
+                                            </span>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                		</div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+	</data>
+</openerp>

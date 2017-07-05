@@ -8,9 +8,9 @@
                 <tree string="Customer Followup For B2C Invoice">
                     <field name="number" string="Invoice Number"/>
                     <field name="company_id"/>
-                    <field name="car_name"/>
-                    <field name="car_brand"/>
-                    <field name="car_model"/>
+                    <field name="car_name" string="Vehicle Name"/>
+                    <field name="car_brand" string="Vehicle Brand"/>
+                    <field name="car_model" string="Vehicle Model"/>
                     <field name="payment_amount_due" />
                     <field name="state"/>
                 </tree>

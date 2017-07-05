@@ -5,6 +5,6 @@ class res_partner(models.Model):
     _inherit = 'res.partner'
     
     vehicle_no = fields.Char('Vehicle No')
-    car_brand_no = fields.Char("Car's Brand")
-    model_no = fields.Char('Model')
+    car_brand_no = fields.Char("Vehicle's Brand")
+    model_no = fields.Char('Vehicle Model')
 

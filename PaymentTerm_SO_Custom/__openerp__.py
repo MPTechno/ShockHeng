@@ -3,7 +3,7 @@
 
 {
     'name': 'PaymentTerm Sale Order Custom',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Sale',
     'summary': 'Custom Sales Order Customization',
     'description': """
@@ -15,7 +15,10 @@
         'custom_sale_order_custmization',
     ],
     'data': [
+          'security/ir.model.access.csv',
           'data/account_data.xml',
+          'wizard/b2b_invoice_advance.xml',
+          'wizard/sale_make_invoice_advance.xml',
           'views/sale_view.xml',
           'views/account_invoice_view.xml',
     ],

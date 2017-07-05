@@ -15,12 +15,12 @@
             <field name="default" eval="True"/>
             <field name="format">A4</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">55</field>
+            <field name="margin_top">60</field>
             <field name="margin_bottom">10</field>
             <field name="margin_left">10</field>
             <field name="margin_right">10</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">45</field>
+            <field name="header_spacing">50</field>
             <field name="dpi">90</field>
         </record>
          <record id="report_insurance_claims_1" model="ir.actions.report.xml">

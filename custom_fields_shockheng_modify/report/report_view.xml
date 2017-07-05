@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <report id="custom_outstanding_payment_report"
+            name="custom_fields_shockheng_modify.report_purchase_outstanding_total"
+            model="sale.order"
+            string="Purchase Outstanding Payment Report"
+            report_type="qweb-pdf"
+            menu="False"
+            />
+
+        <record id="custom_purchase_outstanding_paperformat" model="report.paperformat">
+            <field name="name">Purchase Outstanding Payment Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">60</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">50</field>
+            <field name="dpi">90</field>
+        </record>
+         <record id="custom_outstanding_payment_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="custom_purchase_outstanding_paperformat"/>
+        </record>
+
+    </data>
+</openerp>

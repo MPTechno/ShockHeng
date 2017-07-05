@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_b2b_and_b2c_total_inherit" inherit_id="custom_sale_order_custmization.report_b2b_and_b2c_total">
+            <xpath expr="//div[@id='informations']/div[@class='col-xs-12']/div[@class='col-xs-3'][2]" position="after">
+                <div class="col-xs-3">
+                    <p><strong>Type</strong></p>
+                    <p><span t-esc="get_date(docs)['type']" style="text-transform:uppercase;"/></p>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='col-xs-12'][2]/table[@class='table table-condensed']/thead" position="replace">
+                <thead>
+                    <tr style="border-top:1px solid black;">
+                        <th>Date</th>
+                        <th>Invoice Number</th>
+                        <span t-if="get_date(docs)['type'] == 'b2c'">
+                            <th>Payment Terms</th>
+                        </span>
+                        <span t-if="get_date(docs)['type'] == 'b2b'">
+                            <th>Payment Terms</th>
+                        </span>
+                        <th>Description</th>
+                        <span t-if="get_date(docs)['type'] == 'b2c'">
+                            <th class="text-right">Revenue</th>
+                        </span>
+                        <span t-if="get_date(docs)['type'] == 'b2b'">
+                            <th class="text-right">Outstanding</th>
+                        </span>
+                    </tr>
+                </thead>
+            </xpath>
+            <xpath expr="//div[@class='col-xs-12'][2]/table[@class='table table-condensed']/tbody/span[1]/t/tr/td[2]" position="after">
+                <td>
+                    <span t-esc="main['b2c_payment_terms_id'] or ''"/>
+                </td>
+                <td>
+                    <span t-esc="main['invoice_description'] or ''"/>
+                </td>
+            </xpath>
+            <xpath expr="//div[@class='col-xs-12'][2]/table[@class='table table-condensed']/tbody/span[2]/t/tr/td[2]" position="after">
+                <td>
+                    <span t-esc="main['payment_terms_id'] or ''"/>
+                </td>
+                <td>
+                    <span t-esc="main['invoice_description'] or ''"/>
+                </td>
+            </xpath>
+        </template>
+    </data>
+</openerp>

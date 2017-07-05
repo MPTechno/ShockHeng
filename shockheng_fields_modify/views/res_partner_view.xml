@@ -9,7 +9,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group/group[1]/div[2]" position="after">
-                    <field name="car_name"/>
+                    <field name="car_name" string="Vehicle Name"/>
                 </xpath>
             </field>
         </record>

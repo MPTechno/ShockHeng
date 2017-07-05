@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="external_layout_purchase_outstanding_report">
+            <t t-call="custom_fields_shockheng_modify.external_layout_header_purchase_outstanding_report" />
+            <t t-raw="0" />
+        </template>
+
+        <template id="external_layout_header_purchase_outstanding_report">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12 text-center" style="padding-top: 8px;">
+                         <strong style="font-size: 26px;">
+                                <span t-esc="get_date(docs)['company_id'].name"/>
+                         </strong><br/>
+                         <div style="font-size: 14px;">
+                            <span t-if="get_date(docs)['company_id'].street">
+                                <span t-esc="get_date(docs)['company_id'].street"/>
+                            </span>
+                            <span t-if="get_date(docs)['company_id'].street2">
+                                <span t-esc="get_date(docs)['company_id'].street2"/>
+                            </span>
+                            <span t-if="get_date(docs)['company_id'].city">
+                                <span t-esc="get_date(docs)['company_id'].city"/>
+                            </span>
+                            <span t-if="get_date(docs)['company_id'].state_id">
+                                <span t-esc="get_date(docs)['company_id'].state_id.name"/>
+                            </span>
+                            <span t-if="get_date(docs)['company_id'].zip">
+                                <span t-esc="get_date(docs)['company_id'].zip"/>
+                            </span>
+                            <span t-if="get_date(docs)['company_id'].country_id">
+                                <span t-esc="get_date(docs)['company_id'].country_id.name"/>
+                            </span>
+                         </div>
+                    </div>
+                     <div class="col-xs-4">
+                        <img t-if="get_date(docs)['company_id'].logo" t-att-src="'data:image/png;base64,%s' % get_date(docs)['company_id'].logo"
+                            style="align: left;margin-left: 30px; width: 100px;margin-top: -15px;height: 100px;"/>
+                     </div>
+                     <div class="col-xs-6" style="font-size:14px; float: left !important; padding-top:6px; margin-left:-50px;">
+                            <div style="font-size: 14px;text-align:center; float: left;position: absolute;">
+                                <span t-if="get_date(docs)['company_id'].phone">
+                                    TEL : <span t-esc="get_date(docs)['company_id'].phone"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['company_id'].fax">
+                                    FAX : <span t-esc="get_date(docs)['company_id'].fax"/>
+                                    <br />
+                                </span>
+                                <span t-if="get_date(docs)['company_id'].email">
+                                    EMAIL : <span t-esc="get_date(docs)['company_id'].email"/>
+                                    <br />
+                                </span>
+                                SPECIALISE IN ALL TYPES OF MOTOR VEHICLES<br/>
+                                &#160;&#160;CUSHION SOFA &amp; GLASS CONTRACTOR&#160;&#160;
+                          </div>
+                     </div>
+                     <div class="col-xs-2">
+                        &#160;&#160;&#160;
+                     </div>
+                 </div>
+            </div>
+        </template>
+        <template id="report_purchase_outstanding_total">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="docs">
+                    <t t-call="custom_fields_shockheng_modify.external_layout_purchase_outstanding_report">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <h2>
+                                        Outstanding Payment Report
+                                    </h2>
+                                </div>
+                                <div class="row mt32 mb32" id="informations">
+                                    <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                        <div class="col-xs-3">
+                                            <p><strong>Date From</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_start']" /></p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <p><strong>Date To</strong></p>
+                                            <p><span t-esc="get_date(docs)['date_end']" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12" style="margin-top: 10px;margin-left: 10px;">
+                                    <table class="table table-condensed" width="100%">
+                                        <thead>
+                                            <tr style="border-top:1px solid black;">
+                                                <th>Invoice number</th>
+                                                <th>Date</th>
+                                                <th class="text-right">Total amount</th>
+                                                <th class="text-right">Amount paid</th>
+                                                <th class="text-right">Amount payable</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="get_outstanding_invoices_details(docs)" t-as="main">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="main['invoice_number'] or ''"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="main['date_invoice'] or ''"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="main['total_amount'] or 0.00"/>
+                                                        &#160;<span t-esc="main['display_currency']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="main['amount_paid'] or 0.00"/>
+                                                        &#160;<span t-esc="main['display_currency']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="main['amount_payable'] or 0.00"/>
+                                                        &#160;<span t-esc="main['display_currency']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                   </table>
+                               </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

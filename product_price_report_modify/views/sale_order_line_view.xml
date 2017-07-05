@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       <record id="view_product_pricelist_order_line_tree" model="ir.ui.view">
+            <field name="name">sale.order.line.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Product Pricelist" create="false">
+                    <field name="car_brand_id" />
+                    <field name="car_model_id" />
+                    <field name="product_id" string="Product/Service"/>
+                    <field name="order_id" invisible="1"/>
+                    <field name="order_partner_id" invisible="1"/>
+                    <field name="name" string="Description"/>
+                    <field name="price_unit" string="Unit Price"/>
+                    <field name="product_uom_qty" string="Quantity"/>
+                    <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                    <field name="price_subtotal" sum="Total" string="Total Amount"/>
+                    <field name="state" invisible="1"/>
+                    <field name="invoiced" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="inherit_view_sales_order_line_filter" model="ir.ui.view">
+            <field name="name">sale.order.line.select</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <group expand="0" string="Group By">
+                    <filter string="B2B" icon="terp-accessories-archiver" domain="[('type','=','b2b')]" context="{'group_by':'type'}"/>
+                    <filter string="B2C" icon="terp-accessories-archiver" domain="[('type','=','b2c')]" context="{'group_by':'type'}"/>
+                </group>
+            </field>
+        </record>
+        
+        <record id="action_product_pricelist_order_line_tree" model="ir.actions.act_window">
+            <field name="name">Product Pricelist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_product_pricelist_order_line_tree"/>
+            <field name="search_view_id" ref="sale.view_sales_order_line_filter"/>
+        </record>
+
+        <menuitem action="action_product_pricelist_order_line_tree"
+                  id="menu_b2b_and_b2c_report" 
+                  parent="custom_sale_order_custmization.menu_b2b_and_b2c_report_root"
+                  name="Product Pricelist Report"/>
+    </data>
+</openerp>

@@ -24,8 +24,10 @@ class b2c_invoice_report(report_sxw.rml_parse):
                 res['partner_id'] = l.partner_id
                 res['number'] = l.number
                 res['date_invoice'] = l.date_invoice
-                res['payment_term'] = l.payment_term.name
-                res['amount_total'] = l.amount_total
+                res['payment_term'] = l.b2c_payment_terms_id.name
+                res['amount_total'] = l.amount_total or 0.00
+                res['amount_untaxed'] = l.amount_untaxed or 0.00
+                res['amount_tax'] = l.amount_tax or 0.00
                 res['invoice_line'] = l.invoice_line
                 res['display_currency'] = l.currency_id.symbol
                 res['customer_email'] = l.customer_email

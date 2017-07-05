@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from openerp import api, fields, models
 
 class account_invoice(models.Model):

@@ -120,5 +120,6 @@
         <!-- Input Stock menu -->
         <menuitem id="menu_operation_receipts_move_picking" parent="stock.menu_stock_warehouse_mgmt" sequence="2" 
                   action="action_operation_receipts_move_picking" />
+
     </data>
 </openerp>

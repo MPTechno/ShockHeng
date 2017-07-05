@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Account Invoice form view inherited -->
+        <record model="ir.ui.view" id="inherit_custom_field_purchase_order_form_view">
+            <field name="name">purchase.order.form.view.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_shockheng_modifier.inherit_purchase_order_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='vehicle_no']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='date_planned']" position="attributes">
+                     <attribute name="string">Scheduled Delivery Date</attribute>
+                </xpath>
+                <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                     <attribute name="string">Total Amount</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_stock_product_type_fabric_picking_move" model="ir.actions.act_window">
+            <field name="name">Fabric Stock</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain" eval="[('product_type.name','=','Fabric Stock'),('picking_id.picking_type_id.code','=','incoming'), ('location_id.usage','!=','internal'), ('location_dest_id.usage', '=', 'internal')]"/>
+            <field name="view_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="context">{'product_receive': True, 'search_default_future': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a product receipt. 
+              </p><p>
+                Here you can receive individual products, no matter what
+                purchase order or picking order they come from. You will find
+                the list of all products you are waiting for. Once you receive
+                an order, you can filter based on the name of the supplier or
+                the purchase order reference. Then you can confirm all products
+                received using the buttons on the right of each line.
+              </p>
+            </field>
+        </record>
+        
+        <record id="action_stock_product_type_windscreen_picking_move" model="ir.actions.act_window">
+            <field name="name">Windscreen Stock</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain" eval="[('product_type.name','=','Windscreen Stock'),('picking_id.picking_type_id.code','=','incoming'), ('location_id.usage','!=','internal'), ('location_dest_id.usage', '=', 'internal')]"/>
+            <field name="view_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="context">{'product_receive': True, 'search_default_future': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a product receipt. 
+              </p><p>
+                Here you can receive individual products, no matter what
+                purchase order or picking order they come from. You will find
+                the list of all products you are waiting for. Once you receive
+                an order, you can filter based on the name of the supplier or
+                the purchase order reference. Then you can confirm all products
+                received using the buttons on the right of each line.
+              </p>
+            </field>
+        </record>
+        
+        <!-- Fabric Stock Menu -->
+        <menuitem action="action_stock_product_type_fabric_picking_move" id="menu_action_product_type_fabric_in_move"
+            parent="purchase.menu_action_picking_tree_in_move" sequence="11"/>.
+        
+        <!-- Windscreen Stock Menu -->
+        <menuitem action="action_stock_product_type_windscreen_picking_move" id="menu_action_product_type_windscreen_in_move"
+            parent="purchase.menu_action_picking_tree_in_move" sequence="11"/>
+
+    </data>
+</openerp>

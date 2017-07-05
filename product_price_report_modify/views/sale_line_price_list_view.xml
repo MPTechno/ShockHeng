@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_sale_order_line_product_pricelist" model="ir.ui.view">
+            <field name="name">Sales OrderLine Product Price List</field>
+            <field name="model">sale.order.line.product.pricelist</field>
+            <field name="arch" type="xml">
+             <form string="Products Price List">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" required="1"/>
+                    </h1>
+                    <group col="4">
+                        <field name="active"/>
+                        <field name="type" required="1"/>
+                        <field name="currency_id" groups="base.group_multi_currency" required="1"/>
+                        <field name="company_id" groups="base.group_multi_company" widget="selection" />
+                    </group>
+                    <field name="version_id" context="{'type':type}">
+                        <form string="Pricelist Version">
+                            <group col="4">
+                                <field name="name"/>
+                                <field name="active"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </group>
+                            <field name="items_id" context="{'type':type}"/>
+                        </form>
+                        <tree string="Pricelist Version">
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="create_product_pricelist" string="Create" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sale_order_line_price_list" model="ir.actions.act_window">
+            <field name="name">Create Price List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line.product.pricelist</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sale_order_line_product_pricelist"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="sale_order_line_product_price_list">
+            <field name="model_id" ref="sale.model_sale_order_line" />
+            <field name="name">Create Price List</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_view_sale_order_line_price_list'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order.line</field>
+        </record>
+    </data>
+</openerp>
